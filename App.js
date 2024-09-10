@@ -2,9 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
+  const appName = 'Mobile Dev';
   return (
     <View style={styles.container}>
-      <Text>Mobile Dev</Text>
+      <Text>Welcome to {appName}</Text>
       <StatusBar style="auto" />
     </View>
   );
