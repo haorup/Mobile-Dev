@@ -3,8 +3,9 @@ import { useState } from 'react'
 import React from 'react'
 
 
-const Input = () => {
-    const [text, setText] = useState('')
+const Input = (prop) => {
+    const [text, setText] = useState('');
+
   return (
     <View>
       <TextInput
@@ -12,7 +13,8 @@ const Input = () => {
       autocorrect={true}
       placeholder='Type here'
       value={text}
-      onChangeText={(newText)=>setText(newText)}>
+      onChangeText={(newText)=>setText(newText)}
+      autoFocus={prop.ifFocus}>
       </TextInput>
       <Text>{text}</Text>
     </View>
