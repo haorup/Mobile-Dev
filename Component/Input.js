@@ -17,6 +17,7 @@ const Input = (prop) => {
       autoFocus={prop.ifFocus}>
       </TextInput>
       <Text>{text}</Text>
+      <Text>{text ? text.length : ''}</Text>
     </View>
   )
 }
