@@ -6,12 +6,13 @@ import { useState } from 'react';
 
 export default function App() {
   const appName = 'Mobile Dev';
-  const [text, setText] = useState('')
+  const isFocus = true;
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Header name={appName} version='2' author='Hao'/>
-      <Input/>
+      <Input ifFocus={isFocus}/>
     </View>
   );
 }
