@@ -1,4 +1,4 @@
-import { View, TextInput, Text } from 'react-native'
+import { View, TextInput, Text, Button } from 'react-native'
 import { useState, useRef, useEffect } from 'react'
 import React from 'react'
 
@@ -26,6 +26,10 @@ const Input = (prop) => {
   }, [text, isFocused]); // Only re-run the effect if the text or isFocused value changes
 
 
+  const handleConfirm = (text) => {
+    console.log(text);
+  };
+
   return (
     <View>
       <TextInput
@@ -38,8 +42,8 @@ const Input = (prop) => {
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}>
       </TextInput>
-      <Text>{text}</Text>
       <Text>{textCount}</Text>
+      <Button title='Confirm' onPress={() => handleConfirm()}></Button>
     </View>
   )
 }
