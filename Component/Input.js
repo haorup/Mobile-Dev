@@ -43,7 +43,7 @@ const Input = (prop) => {
         onBlur={() => setIsFocused(false)}>
       </TextInput>
       <Text>{textCount}</Text>
-      <Button title='Confirm' onPress={() => handleConfirm()}></Button>
+      <Button title='Confirm' onPress={() => handleConfirm(text)}></Button>
     </View>
   )
 }
