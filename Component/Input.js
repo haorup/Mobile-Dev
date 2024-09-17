@@ -1,9 +1,11 @@
-import { View, TextInput, Text, Button } from 'react-native'
-import { useState, useRef, useEffect } from 'react'
+import { View, TextInput, Text, Button, StyleSheet, Modal } from 'react-native'
+import { useState, useEffect } from 'react'
 import React from 'react'
 
 
-const Input = (prop) => {
+const Input = (prop,
+              textInputHandler,
+              modalIfVisible) => {
   const [text, setText] = useState('');
   const [textCount, setTextCount] = useState('');
   const [isFocused, setIsFocused] = useState(true);
@@ -25,13 +27,15 @@ const Input = (prop) => {
     updateTextCount();
   }, [text, isFocused]); // Only re-run the effect if the text or isFocused value changes
 
-
   const handleConfirm = (text) => {
-    console.log(text);
+    textInputHandler(text);
   };
 
   return (
     <View>
+    <Modal visible={modalIfVisible}
+            animationType='slide'>
+    <View style={styles.container}>
       <TextInput
         style={{ borderBottomWidth: 1, borderBottomColor: 'black' }}
         autocorrect={true}
@@ -45,7 +49,18 @@ const Input = (prop) => {
       <Text>{textCount}</Text>
       <Button title='Confirm' onPress={() => handleConfirm(text)}></Button>
     </View>
+    </Modal>
+    </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default Input
