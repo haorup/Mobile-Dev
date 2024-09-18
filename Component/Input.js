@@ -34,6 +34,7 @@ const Input = ({ ifFocus,
 
   function handleConfirm() {
     textInputHandler(text);
+    setText(''); // Clear the text input in the modal
   };
 
   function handleCancel() {
@@ -52,6 +53,7 @@ const Input = ({ ifFocus,
         text: 'OK',
         onPress: () => {
           modalHandler();
+          setText(''); // Clear the text input in the modal
         }
       }
     ]

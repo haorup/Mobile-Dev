@@ -20,7 +20,6 @@ export default function App() {
   // function called when the user cancels the input
   function handleCancelInput() {
     console.log("input cancelled");
-    setText('');
     setAppVisibility(false);
   }
 
