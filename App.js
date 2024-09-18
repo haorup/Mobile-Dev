@@ -10,9 +10,17 @@ export default function App() {
   const isFocus = true;
   const [text, setText] = useState('');
 
+  // function called when the user confirms the input
   function handleInputData(textReceived) {
-    console.log(textReceived);
+    console.log("input text:", textReceived);
     setText(textReceived);
+    setAppVisibility(false);
+  }
+
+  // function called when the user cancels the input
+  function handleCancelInput() {
+    console.log("input cancelled");
+    setText('');
     setAppVisibility(false);
   }
 
@@ -27,7 +35,8 @@ export default function App() {
         </View>
         <Input modalIfVisible={appVisibility}
           ifFocus={isFocus}
-          textInputHandler={handleInputData} />
+          textInputHandler={handleInputData}
+          modalHandler={handleCancelInput} />
       </View>
 
       <View style={styles.bottomView}>
