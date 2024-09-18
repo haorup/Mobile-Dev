@@ -1,6 +1,6 @@
 import {
   View, TextInput, Text, Button,
-  StyleSheet, Modal, Alert
+  StyleSheet, Modal, Alert, Image
 } from 'react-native'
 import { useState, useEffect } from 'react'
 import React from 'react'
@@ -68,6 +68,16 @@ const Input = ({ ifFocus,
     <Modal visible={modalIfVisible}
       animationType='slide'>
       <View style={styles.container}>
+
+        {/* images of goal */}
+        <Image source={require('../assets/input.png')}
+          style={styles.imageStyle}
+          alt='An image of goal' />
+        <Image source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2617/2617812.png' }}
+          style={[styles.imageStyle, { paddingBottom: 5, marginBottom: 10 }]}
+          alt='A same image of goal' />
+
+        {/* Text input */}
         <TextInput
           style={styles.input}
           autocorrect={true}
@@ -84,8 +94,8 @@ const Input = ({ ifFocus,
         <View style={styles.buttonStyle}>
           <Button title='Confirm'
             onPress={() => handleConfirm()}
-              disabled={isConfrmDisabled}
-            ></Button>
+            disabled={isConfrmDisabled}
+          ></Button>
           <Button title='Cancel' onPress={() => handleCancel()}></Button>
         </View>
       </View>
@@ -110,6 +120,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingRight: 10,
     marginLeft: 5,
+  },
+  imageStyle: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 100,
+    height: 100,
   }
 });
 
