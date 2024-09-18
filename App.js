@@ -18,12 +18,14 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-
+      <StatusBar style="auto" />
       <View style={styles.topView}>
-        <StatusBar style="auto" />
-        <Header name={appName} version='2' author='Hao' />
-        <Button title='Add a goal' onPress={() => setAppVisibility(setAppVisibility(true))}></Button>
-        <Input ifVisible={appVisibility}
+        <Header name={appName}> </Header>
+        <View style={styles.buttonStyle}>
+          <Button title='Add a goal'
+            onPress={function () { setAppVisibility(true) }}></Button>
+        </View>
+        <Input modalIfVisible={appVisibility}
           ifFocus={isFocus}
           textInputHandler={handleInputData} />
       </View>
@@ -44,15 +46,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   text: {
-    color: 'red',
-    fontSize: 20
+    color: 'blue',
+    fontSize: 20,
   },
   topView: {
     flex: 1,
-    backgroundColor: 'blue',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  buttonStyle: {
+    width: '30%',
+    margin: 3,
+
   },
   bottomView: {
     flex: 4,
-    backgroundColor: 'red',
+    backgroundColor: '#d5d',
+    alignItems: 'center',
   }
 });
