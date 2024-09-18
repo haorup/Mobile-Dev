@@ -16,7 +16,6 @@ const Input = ({ ifFocus,
   const [isFocused, setIsFocused] = useState(true); // State to hold the focus status
   const [isConfrmDisabled, setIsConfirmDisabled] = useState(true); // State to hold the confirm button status
 
-
   useEffect(() => {
     const updateTextCount = () => {
       if (!isFocused) { // If the input is not focused
@@ -66,8 +65,10 @@ const Input = ({ ifFocus,
   return (
 
     <Modal visible={modalIfVisible}
-      animationType='slide'>
+      animationType='slide'
+      transparent={true}>
       <View style={styles.container}>
+        <View style={styles.modalStyle}>
 
         {/* images of goal */}
         <Image source={require('../assets/input.png')}
@@ -98,6 +99,7 @@ const Input = ({ ifFocus,
           ></Button>
           <Button title='Cancel' onPress={() => handleCancel()}></Button>
         </View>
+        </View>
       </View>
     </Modal>
 
@@ -107,7 +109,7 @@ const Input = ({ ifFocus,
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -122,10 +124,17 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   imageStyle: {
-    alignItems: 'center',
-    justifyContent: 'center',
     width: 100,
     height: 100,
+  },
+  modalStyle: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '70%',
+    height: '40%',
+    borderRadius: 10,
+    padding: 10,
   }
 });
 
