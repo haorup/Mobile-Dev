@@ -76,8 +76,12 @@ const Input = ({ ifFocus,
           onBlur={() => setIsFocused(false)}>
         </TextInput>
         <Text>{textCount}</Text>
+
+        {/* Confirm and Cancel buttons */}
+        <View style={styles.buttonStyle}>
         <Button title='Confirm' onPress={() => handleConfirm()}></Button>
         <Button title='Cancel' onPress={() => handleCancel()}></Button>
+        </View>
       </View>
     </Modal>
 
@@ -95,6 +99,11 @@ const styles = StyleSheet.create({
     borderColor: 'purple',
     borderWidth: 2,
     padding: 5,
+  },
+  buttonStyle: {
+    flexDirection: 'row',
+    paddingRight: 10,
+    marginLeft: 5,
   }
 });
 
