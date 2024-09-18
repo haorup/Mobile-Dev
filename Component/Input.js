@@ -11,9 +11,11 @@ const Input = ({ ifFocus,
   modalHandler,
   modalIfVisible }) => {
 
-  const [text, setText] = useState('');
-  const [textCount, setTextCount] = useState('');
-  const [isFocused, setIsFocused] = useState(true);
+  const [text, setText] = useState('');  // State to hold the text input
+  const [textCount, setTextCount] = useState(''); // State to hold the text count
+  const [isFocused, setIsFocused] = useState(true); // State to hold the focus status
+  const [isConfrmDisabled, setIsConfirmDisabled] = useState(true); // State to hold the confirm button status
+
 
   useEffect(() => {
     const updateTextCount = () => {
@@ -22,25 +24,26 @@ const Input = ({ ifFocus,
           setTextCount('');
         } else if (text.length >= 3) {
           setTextCount('Thank you');
+          setIsConfirmDisabled(false);
         } else {
           setTextCount('Please type more than 3 characters');
         }
       } else {
         setTextCount(text ? text.length.toString() : ''); // If the input is focused
+        text.length >= 3 ? setIsConfirmDisabled(false) : setIsConfirmDisabled(true);
       }
     };
     updateTextCount();
   }, [text, isFocused]); // Only re-run the effect if the text or isFocused value changes
 
+  // Function to handle the confirm button
   function handleConfirm() {
     textInputHandler(text);
     setText(''); // Clear the text input in the modal
   };
 
+  // Function to handle the cancel button
   function handleCancel() {
-    // show an alert
-    // ok to dismiss the modal
-    // cancel to stay on the modal
     Alert.alert(
       'Cancel input',
       'Modal will be dismissed', [
@@ -57,8 +60,6 @@ const Input = ({ ifFocus,
         }
       }
     ]
-
-
     )
   }
 
@@ -81,8 +82,11 @@ const Input = ({ ifFocus,
 
         {/* Confirm and Cancel buttons */}
         <View style={styles.buttonStyle}>
-        <Button title='Confirm' onPress={() => handleConfirm()}></Button>
-        <Button title='Cancel' onPress={() => handleCancel()}></Button>
+          <Button title='Confirm'
+            onPress={() => handleConfirm()}
+              disabled={isConfrmDisabled}
+            ></Button>
+          <Button title='Cancel' onPress={() => handleCancel()}></Button>
         </View>
       </View>
     </Modal>
