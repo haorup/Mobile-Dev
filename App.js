@@ -39,7 +39,9 @@ export default function App() {
       </View>
 
       <View style={styles.bottomView}>
-        <Text style={styles.text}>{text}</Text>
+        <View style={styles.textBackgroundStyle}>
+          <Text style={styles.text}>{text}</Text>
+        </View>
       </View>
 
     </SafeAreaView>
@@ -57,6 +59,12 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: 20,
   },
+  textBackgroundStyle: {
+    backgroundColor: 'yellow',
+    borderRadius: 5,
+    margin: 5,
+    padding: 5,
+  },
   topView: {
     flex: 1,
     alignItems: 'center',
@@ -65,7 +73,6 @@ const styles = StyleSheet.create({
   buttonStyle: {
     width: '30%',
     margin: 3,
-
   },
   bottomView: {
     flex: 4,

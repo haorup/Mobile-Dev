@@ -93,16 +93,15 @@ const Input = ({ ifFocus,
 
         {/* Confirm and Cancel buttons */}
         <View style={styles.buttonStyle}>
+          <Button title='Cancel'
+            onPress={() => handleCancel()}/>
           <Button title='Confirm'
             onPress={() => handleConfirm()}
-            disabled={isConfrmDisabled}
-          ></Button>
-          <Button title='Cancel' onPress={() => handleCancel()}></Button>
+            disabled={isConfrmDisabled} />
         </View>
         </View>
       </View>
     </Modal>
-
   )
 }
 
