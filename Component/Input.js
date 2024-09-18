@@ -1,9 +1,12 @@
-import { View, TextInput, Text } from 'react-native'
-import { useState, useRef, useEffect } from 'react'
+import { View, TextInput, Text, Button, StyleSheet, Modal } from 'react-native'
+import { useState, useEffect } from 'react'
 import React from 'react'
 
 
-const Input = (prop) => {
+const Input = ({ifFocus,
+              textInputHandler,
+              modalIfVisible}) => {
+
   const [text, setText] = useState('');
   const [textCount, setTextCount] = useState('');
   const [isFocused, setIsFocused] = useState(true);
@@ -25,23 +28,45 @@ const Input = (prop) => {
     updateTextCount();
   }, [text, isFocused]); // Only re-run the effect if the text or isFocused value changes
 
+  function handleConfirm() {
+    textInputHandler(text);
+  };
 
   return (
-    <View>
+
+    <Modal visible={modalIfVisible}
+            animationType='slide'>
+    <View style={styles.container}>
       <TextInput
-        style={{ borderBottomWidth: 1, borderBottomColor: 'black' }}
+        style={styles.input}
         autocorrect={true}
         placeholder='Type here'
         value={text}
         onChangeText={(newText) => setText(newText)}
-        autoFocus={prop.ifFocus}
+        autoFocus={ifFocus}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}>
       </TextInput>
-      <Text>{text}</Text>
       <Text>{textCount}</Text>
+      <Button title='Confirm' onPress={() => handleConfirm()}></Button>
     </View>
+    </Modal>
+
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  input: {
+    borderColor: 'purple',
+    borderWidth: 2,
+    padding: 5,
+  }
+});
 
 export default Input
