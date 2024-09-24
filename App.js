@@ -45,14 +45,15 @@ export default function App() {
       </View>
 
       <View style={styles.bottomView}>
-        <ScrollView>
-        {arrOfGoal.map((goal) => {
-          return (
-            <View key={goal.id}
-              style={styles.textBackgroundStyle}>
-              <Text style={styles.text}>{goal.text}</Text>
-            </View>)
-        })}
+        <ScrollView contentContainerStyle={styles.scrollViewStyle}
+          bounces={true}>
+          {arrOfGoal.map((goal) => {
+            return (
+              <View key={goal.id}
+                style={styles.textBackgroundStyle}>
+                <Text style={styles.text}>{goal.text}</Text>
+              </View>)
+          })}
         </ScrollView>
       </View>
     </SafeAreaView>
@@ -88,6 +89,9 @@ const styles = StyleSheet.create({
   bottomView: {
     flex: 4,
     backgroundColor: '#d5d',
+    // alignItems: 'center',
+  },
+  scrollViewStyle: {
     alignItems: 'center',
   }
 });
