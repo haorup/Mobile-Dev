@@ -10,9 +10,16 @@ export default function App() {
   const isFocus = true;
   const [text, setText] = useState('');
 
+  // function called when the user confirms the input
   function handleInputData(textReceived) {
-    console.log(textReceived);
+    console.log("input text:", textReceived);
     setText(textReceived);
+    setAppVisibility(false);
+  }
+
+  // function called when the user cancels the input
+  function handleCancelInput() {
+    console.log("input cancelled");
     setAppVisibility(false);
   }
 
@@ -27,11 +34,14 @@ export default function App() {
         </View>
         <Input modalIfVisible={appVisibility}
           ifFocus={isFocus}
-          textInputHandler={handleInputData} />
+          textInputHandler={handleInputData}
+          modalHandler={handleCancelInput} />
       </View>
 
       <View style={styles.bottomView}>
-        <Text style={styles.text}>{text}</Text>
+        <View style={styles.textBackgroundStyle}>
+          <Text style={styles.text}>{text}</Text>
+        </View>
       </View>
 
     </SafeAreaView>
@@ -49,16 +59,20 @@ const styles = StyleSheet.create({
     color: 'blue',
     fontSize: 20,
   },
+  textBackgroundStyle: {
+    backgroundColor: 'yellow',
+    borderRadius: 5,
+    margin: 5,
+    padding: 5,
+  },
   topView: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-
   },
   buttonStyle: {
     width: '30%',
     margin: 3,
-
   },
   bottomView: {
     flex: 4,
