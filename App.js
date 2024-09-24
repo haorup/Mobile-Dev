@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import Header from './Component/Header';
 import Input from './Component/Input';
 import { useState } from 'react';
@@ -45,7 +45,20 @@ export default function App() {
       </View>
 
       <View style={styles.bottomView}>
-        <ScrollView contentContainerStyle={styles.scrollViewStyle}
+        {/* using FlatList */}
+        <FlatList data={arrOfGoal}
+                  contentContainerStyle={styles.scrollViewStyle}
+                  renderItem={({item}) => {
+                    // console.log("goalObj:", goalObj);
+                    return (
+                      <View key={item.id}
+                        style={styles.textBackgroundStyle}>
+                        <Text style={styles.text}>{item.text}</Text>
+                      </View>
+                    )
+                  }}/>
+
+        {/* <ScrollView contentContainerStyle={styles.scrollViewStyle}
           bounces={true}>
           {arrOfGoal.map((goal) => {
             return (
@@ -54,7 +67,7 @@ export default function App() {
                 <Text style={styles.text}>{goal.text}</Text>
               </View>)
           })}
-        </ScrollView>
+        </ScrollView> */}
       </View>
     </SafeAreaView>
   );
