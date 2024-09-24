@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } fr
 import Header from './Component/Header';
 import Input from './Component/Input';
 import { useState } from 'react';
+import GoalItem from './Component/GoalItem';
 
 export default function App() {
   const appName = 'Mobile Dev';
@@ -29,6 +30,14 @@ export default function App() {
     setAppVisibility(false);
   }
 
+  // function to delte a goal
+  function handleDeleteGoal(goalId) {
+    console.log("Delete goal:", goalId);
+    setArrOfGoal((prevGoal) => {
+      return prevGoal.filter((goal) => goal.id !== goalId);
+    });
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -51,10 +60,8 @@ export default function App() {
                   renderItem={({item}) => {
                     // console.log("goalObj:", goalObj);
                     return (
-                      <View key={item.id}
-                        style={styles.textBackgroundStyle}>
-                        <Text style={styles.text}>{item.text}</Text>
-                      </View>
+                      <GoalItem goalObj={item}
+                                goalDeleteHandler={handleDeleteGoal}/>
                     )
                   }}/>
 
