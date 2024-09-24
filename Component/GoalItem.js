@@ -1,11 +1,11 @@
 import React from 'react';
 import { Button, View, Text, StyleSheet } from 'react-native';
 
-export default function GoalItem({ goalObj }, goalDeleteHandler) {
+export default function GoalItem({ goalObj, goalDeleteHandler }) {
     function handleDelete() {
         goalDeleteHandler(goalObj.id);
     }
-    return(<View key={goalObj.id}
+    return(<View 
         style={styles.textBackgroundStyle}>
         <Text style={styles.text}>{goalObj.text}</Text>
         <Button title='X' onPress={() => handleDelete()}/>
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     text: {
         color: 'blue',
         fontSize: 20,
-        padding: 50,
+        padding: 5,
     },
     textBackgroundStyle: {
         backgroundColor: 'yellow',
