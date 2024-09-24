@@ -5,10 +5,10 @@ export default function GoalItem({ goalObj, goalDeleteHandler }) {
     function handleDelete() {
         goalDeleteHandler(goalObj.id);
     }
-    return(<View 
+    return(<View
         style={styles.textBackgroundStyle}>
         <Text style={styles.text}>{goalObj.text}</Text>
-        <Button title='X' onPress={() => handleDelete()}/>
+        <Button title='X' color='red' onPress={() => handleDelete()}/>
     </View>)
 }
 
