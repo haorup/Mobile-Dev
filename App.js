@@ -60,6 +60,10 @@ export default function App() {
                   ListEmptyComponent={<Text style={styles.flatListProp}>
                     No Goals List
                   </Text>}
+                  ListHeaderComponent={ arrOfGoal.length > 0
+                    && (<Text style={styles.flatListProp}>
+                    My Goals List
+                  </Text>)}
                   renderItem={({item}) => {
                     // console.log("goalObj:", goalObj);
                     return (
