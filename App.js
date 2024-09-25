@@ -79,7 +79,7 @@ export default function App() {
         <FlatList data={arrOfGoal}
                   contentContainerStyle={styles.scrollViewStyle}
                   ListEmptyComponent={<Text style={styles.flatListProp}>
-                    No Goals List</Text>}
+                    No Goals to show</Text>}
                   ListHeaderComponent={ arrOfGoal.length > 0
                     && (<Text style={styles.flatListProp}>
                     My Goals List</Text>)}
