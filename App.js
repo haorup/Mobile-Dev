@@ -10,7 +10,7 @@ export default function App() {
   const appName = 'Mobile Dev';
   const [appVisibility, setAppVisibility] = useState(false);
   const isFocus = true;
-  const [text, setText] = useState('');
+  // const [text, setText] = useState('');
   const [arrOfGoal, setArrOfGoal] = useState([]);
 
   // function called when the user confirms the input
