@@ -4,7 +4,7 @@ import Header from './Component/Header';
 import Input from './Component/Input';
 import { useState } from 'react';
 import GoalItem from './Component/GoalItem';
-import LineDeparator from './Component/LineSeparator'; 
+import LineSeparator from './Component/LineSeparator'; 
 
 export default function App() {
   const appName = 'Mobile Dev';
@@ -86,7 +86,7 @@ export default function App() {
                   ListFooterComponent={ arrOfGoal.length > 0
                     && (<Button title='Delete all'
                       onPress={() => {handleDeleteAll()}}/>)}
-                  ItemSeparatorComponent={<LineDeparator/>}
+                  ItemSeparatorComponent={<LineSeparator/>}
                   renderItem={({item}) => {
                     // console.log("goalObj:", goalObj);
                     return (
