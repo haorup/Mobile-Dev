@@ -4,6 +4,7 @@ import Header from './Component/Header';
 import Input from './Component/Input';
 import { useState } from 'react';
 import GoalItem from './Component/GoalItem';
+import LineDeparator from './Component/LineSeparator'; 
 
 export default function App() {
   const appName = 'Mobile Dev';
@@ -78,16 +79,14 @@ export default function App() {
         <FlatList data={arrOfGoal}
                   contentContainerStyle={styles.scrollViewStyle}
                   ListEmptyComponent={<Text style={styles.flatListProp}>
-                    No Goals List
-                  </Text>}
+                    No Goals List</Text>}
                   ListHeaderComponent={ arrOfGoal.length > 0
                     && (<Text style={styles.flatListProp}>
-                    My Goals List
-                  </Text>)}
+                    My Goals List</Text>)}
                   ListFooterComponent={ arrOfGoal.length > 0
                     && (<Button title='Delete all'
-                      onPress={() => {handleDeleteAll()}}/>)
-                  }
+                      onPress={() => {handleDeleteAll()}}/>)}
+                  ItemSeparatorComponent={<LineDeparator/>}
                   renderItem={({item}) => {
                     // console.log("goalObj:", goalObj);
                     return (
