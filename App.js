@@ -57,6 +57,9 @@ export default function App() {
         {/* using FlatList */}
         <FlatList data={arrOfGoal}
                   contentContainerStyle={styles.scrollViewStyle}
+                  ListEmptyComponent={<Text style={styles.flatListProp}>
+                    No Goals List
+                  </Text>}
                   renderItem={({item}) => {
                     // console.log("goalObj:", goalObj);
                     return (
@@ -113,5 +116,11 @@ const styles = StyleSheet.create({
   },
   scrollViewStyle: {
     alignItems: 'center',
+  },
+  flatListProp: {
+    color: 'black',
+    fontSize: 20,
+    padding: 5,
+    margin: 5,
   }
 });
