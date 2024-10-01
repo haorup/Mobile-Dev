@@ -6,7 +6,7 @@ import { useState } from 'react';
 import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 
-export default function App() {
+export default function App({ navigation }) {
   const appName = 'Mobile Dev';
   const [appVisibility, setAppVisibility] = useState(false);
   const isFocus = true;
@@ -37,6 +37,10 @@ export default function App() {
     setArrOfGoal((prevGoal) => {
       return prevGoal.filter((goal) => goal.id !== goalId);
     });
+  }
+
+  function handlePressGoal(passedGoal) {
+    navigation.navigate('GoalDetails', { goalData: passedGoal });
   }
 
   // function to delete all goals
@@ -91,7 +95,8 @@ export default function App() {
                     // console.log("goalObj:", goalObj);
                     return (
                       <GoalItem goalObj={item}
-                                goalDeleteHandler={handleDeleteGoal}/>
+                                goalDeleteHandler={handleDeleteGoal}
+                                goalPressHandler={handlePressGoal}/>
                     )
                   }}/>
 
