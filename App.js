@@ -1,15 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Alert } from 'react-native';
 import Header from './Component/Header';
 import Input from './Component/Input';
 import { useState } from 'react';
 import GoalItem from './Component/GoalItem';
+import LineSeparator from './Component/LineSeparator'; 
 
 export default function App() {
   const appName = 'Mobile Dev';
   const [appVisibility, setAppVisibility] = useState(false);
   const isFocus = true;
-  const [text, setText] = useState('');
+  // const [text, setText] = useState('');
   const [arrOfGoal, setArrOfGoal] = useState([]);
 
   // function called when the user confirms the input
@@ -38,6 +39,26 @@ export default function App() {
     });
   }
 
+  // function to delete all goals
+  function handleDeleteAll() {
+    console.log("Delete all goals");
+    Alert.alert(
+      "Delete all goals",
+      "Do you want to delete all goals?",
+      [
+        {
+          text: "No",
+          style: "cancel"
+        },
+        {
+          text: "Yes",
+          onPress: () => {
+            setArrOfGoal([]);
+          }
+        }
+      ]);
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -57,6 +78,15 @@ export default function App() {
         {/* using FlatList */}
         <FlatList data={arrOfGoal}
                   contentContainerStyle={styles.scrollViewStyle}
+                  ListEmptyComponent={<Text style={styles.flatListProp}>
+                    No Goals to show</Text>}
+                  ListHeaderComponent={ arrOfGoal.length > 0
+                    && (<Text style={styles.flatListProp}>
+                    My Goals List</Text>)}
+                  ListFooterComponent={ arrOfGoal.length > 0
+                    && (<Button title='Delete all'
+                      onPress={() => {handleDeleteAll()}}/>)}
+                  ItemSeparatorComponent={<LineSeparator/>}
                   renderItem={({item}) => {
                     // console.log("goalObj:", goalObj);
                     return (
@@ -113,5 +143,11 @@ const styles = StyleSheet.create({
   },
   scrollViewStyle: {
     alignItems: 'center',
+  },
+  flatListProp: {
+    color: 'black',
+    fontSize: 20,
+    padding: 5,
+    margin: 5,
   }
 });
