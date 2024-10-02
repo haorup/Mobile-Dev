@@ -25,8 +25,8 @@ export default function App() {
                 ? route.params.goalData.text
                 : "undefined details",
               headerRight: () => {
-                return (<Button title='Warnings'
-                  onPress={() => { console.log("warnings") }} />)
+                return (<Button title='Warnings'/>)
+
               }
             }
           }} />
