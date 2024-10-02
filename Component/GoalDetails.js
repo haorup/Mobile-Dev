@@ -1,20 +1,27 @@
-import { StyleSheet, Text, View, Button } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Button } from 'react-native';
+import React from 'react';
+import { useState } from 'react';
 
 export default function GoalDetails({ navigation, route }) {
+
+  const [isRedColor, setIsRedColor] = useState(false);
 
   function moreDetailHandler() {
     navigation.push("GoalDetails");
   }
 
-  function warningHandler() {}
-
+  function warningHandler() {
+    setIsRedColor(!isRedColor);
+    navigation.setOptions({
+      title: "Warning",
+    })
+  }
 
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
         <Button title="Warnings"
-          onPress={() => (console.log("warnings"))} />
+          onPress={() => (warningHandler())} />
       ),
     })
   });
@@ -23,7 +30,7 @@ export default function GoalDetails({ navigation, route }) {
     <View>
       {route.params ? (
         <View>
-          <Text style={[styles.text, styles.blackColor]}>
+          <Text style={[styles.text, (isRedColor ? styles.redColor : styles.blackColor)]}>
             Goal Details: {route.params.goalData.text} {'\n'}
             Goal ID: {route.params.goalData.id}
           </Text>
