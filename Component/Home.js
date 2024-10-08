@@ -39,10 +39,6 @@ export default function App({ navigation }) {
     });
   }
 
-  function handlePressGoal(passedGoal) {
-    navigation.navigate('GoalDetails', { goalData: passedGoal });
-  }
-
   // function to delete all goals
   function handleDeleteAll() {
     console.log("Delete all goals");
@@ -96,7 +92,7 @@ export default function App({ navigation }) {
                     return (
                       <GoalItem goalObj={item}
                                 goalDeleteHandler={handleDeleteGoal}
-                                goalPressHandler={handlePressGoal}/>
+                                passedNavigation={navigation}/>
                     )
                   }}/>
 
