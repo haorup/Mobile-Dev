@@ -32,7 +32,7 @@ export default function GoalItem({ goalObj,
 
             <PressButton passedStyle={styles.pressButtonSyle}
                 passedOnPress={handleDelete}>
-                <AntDesign name="delete" size={24} color="black" />
+                <AntDesign name="delete" size={24} color='black'/>
             </PressButton>
         </Pressable>
     </View>)

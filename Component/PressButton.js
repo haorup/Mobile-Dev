@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         padding: 5,
         radius: 5,
-
     },
     defaultPressedSytle: {
         backgroundColor: 'white',
