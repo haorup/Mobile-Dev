@@ -24,10 +24,9 @@ export default function App() {
               title: route.params
                 ? route.params.goalData.text
                 : "undefined details",
-              headerRight: () => {
-                return (<Button title='Warnings'/>)
-
-              }
+              // headerRight: () => {
+              //   return (<Button title='Warnings'/>)
+              // }
             }
           }} />
       </Stack.Navigator>

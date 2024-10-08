@@ -5,6 +5,7 @@ import Input from './Input';
 import { useState } from 'react';
 import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
+import PressButton from './PressButton';
 
 export default function App({ navigation }) {
   const appName = 'Mobile Dev';
@@ -65,8 +66,12 @@ export default function App({ navigation }) {
       <View style={styles.topView}>
         <Header name={appName}> </Header>
         <View style={styles.buttonStyle}>
-          <Button title='Add a goal'
-            onPress={function () { setAppVisibility(true) }}></Button>
+          {/* <Button title='Add a goal'
+            onPress={function () { setAppVisibility(true) }}></Button> */}
+            <PressButton
+            passedOnPress={() => {setAppVisibility(true)}}>
+              <Text>Add a Goal</Text>
+            </PressButton>
         </View>
         <Input modalIfVisible={appVisibility}
           ifFocus={isFocus}
