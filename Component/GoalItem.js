@@ -16,7 +16,16 @@ export default function GoalItem({ goalObj,
     return (<View
         style={styles.textBackgroundStyle}>
         <Pressable onPress={() => handleNavigation()}
-            style={{ flexDirection: 'row' }}>
+            style={({ pressed }) => {
+                return [styles.pressableStyle,
+                {
+                    backgroundColor: pressed ?
+                        'red' : 'yellow',
+                    opacity: pressed ? 0.2 : 1,
+                },
+                ]
+            }}
+            android_ripple={{ color: 'red', radius: 25 }}>
             <Text style={styles.text}>{goalObj.text}</Text>
             <Button title='X' color='red' onPress={() => handleDelete()} />
         </Pressable>
@@ -33,6 +42,14 @@ const styles = StyleSheet.create({
         backgroundColor: 'yellow',
         borderRadius: 5,
         margin: 5,
+        // flexDirection: 'row',
+    },
+    pressableStyle: {
         flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 5,
+    },
+    pressedStyle: {
+        color: 'red',
     },
 })
