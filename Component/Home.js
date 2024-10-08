@@ -69,8 +69,9 @@ export default function App({ navigation }) {
           {/* <Button title='Add a goal'
             onPress={function () { setAppVisibility(true) }}></Button> */}
             <PressButton
-            passedOnPress={() => {setAppVisibility(true)}}>
-              <Text>Add a Goal</Text>
+            passedOnPress={() => {setAppVisibility(true)}}
+            componentStyle={{backgroundColor: 'green', borderRadius:5, alignItems:'center'}}>
+              <Text style={{color: 'white', padding: 5}}>Add a Goal</Text>
             </PressButton>
         </View>
         <Input modalIfVisible={appVisibility}

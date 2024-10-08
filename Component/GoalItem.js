@@ -59,9 +59,7 @@ const styles = StyleSheet.create({
         color: 'red',
     },
     pressButtonSyle: {
-        margin: 5,
-        padding: 5,
-        flexDirection: 'row',
-        alignItems: 'center',
+        margin: 5,  // use margin to make zoom effect.
+        backgroundColor: 'lightgreen', // customized background color
     }
 })
