@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, Button } from 'react-native';
 import React from 'react';
 import { useState } from 'react';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import PressButton from './PressButton';
 
 export default function GoalDetails({ navigation, route }) {
 
@@ -22,9 +24,10 @@ export default function GoalDetails({ navigation, route }) {
   React.useEffect(() => {
     navigation.setOptions({
       headerRight: () => (
-        <Button title="Warnings"
-        color={isRedColor ? 'red' : 'blue'}
-          onPress={() => (warningHandler())} />
+        <PressButton
+        passedOnPress={warningHandler}>
+          <AntDesign name="warning" size={24} color="black" />
+        </PressButton>
       ),
     })
   });
@@ -43,7 +46,6 @@ export default function GoalDetails({ navigation, route }) {
       ) : (
         <Text style={textStyle}>No more Details</Text>
       )}</View>
-
   )
 }
 
