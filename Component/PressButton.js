@@ -3,6 +3,7 @@ import React from 'react'
 
 const PressButton = ({ children,
     passedStyle,
+    componentStyle,
     passedOnPress }) => {
     return (
         <View>
@@ -10,6 +11,7 @@ const PressButton = ({ children,
             style={({ pressed }) => {
                 return [
                     styles.defaultStyle,
+                    componentStyle,
                     pressed && styles.defaultPressedSytle,
                     pressed && passedStyle,
                 ]
@@ -28,8 +30,8 @@ const styles = StyleSheet.create({
         radius: 5,
     },
     defaultPressedSytle: {
-        backgroundColor: 'white',
-        opacity: 0.2,
+        backgroundColor: 'pink',
+        opacity: 0.5,
     }
 })
 
