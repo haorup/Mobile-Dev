@@ -1,5 +1,7 @@
 import React from 'react';
-import { Button, View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import PressButton from './PressButton';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 export default function GoalItem({ goalObj,
     goalDeleteHandler, passedNavigation }) {
@@ -27,7 +29,11 @@ export default function GoalItem({ goalObj,
             }}
             android_ripple={{ color: 'red', radius: 25 }}>
             <Text style={styles.text}>{goalObj.text}</Text>
-            <Button title='X' color='red' onPress={() => handleDelete()} />
+
+            <PressButton passedStyle={styles.pressButtonSyle}
+                passedOnPress={handleDelete}>
+                <AntDesign name="delete" size={24} color="black" />
+            </PressButton>
         </Pressable>
     </View>)
 }
@@ -52,4 +58,10 @@ const styles = StyleSheet.create({
     pressedStyle: {
         color: 'red',
     },
+    pressButtonSyle: {
+        margin: 5,
+        padding: 5,
+        flexDirection: 'row',
+        alignItems: 'center',
+    }
 })
