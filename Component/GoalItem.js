@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, View, Text, StyleSheet } from 'react-native';
+import { Button, View, Text, StyleSheet, Pressable } from 'react-native';
 
 export default function GoalItem({ goalObj,
     goalDeleteHandler, passedNavigation }) {
@@ -15,9 +15,11 @@ export default function GoalItem({ goalObj,
     }
     return (<View
         style={styles.textBackgroundStyle}>
-        <Text style={styles.text}>{goalObj.text}</Text>
-        <Button title='X' color='red' onPress={() => handleDelete()} />
-        <Button title='I' color='green' onPress={() => handleNavigation()} />
+        <Pressable onPress={() => handleNavigation()}
+            style={{ flexDirection: 'row' }}>
+            <Text style={styles.text}>{goalObj.text}</Text>
+            <Button title='X' color='red' onPress={() => handleDelete()} />
+        </Pressable>
     </View>)
 }
 
