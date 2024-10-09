@@ -3,8 +3,8 @@ import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
 import PressButton from './PressButton';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-export default function GoalItem({ goalObj,
-    goalDeleteHandler, passedNavigation }) {
+export default function GoalItem({ goalObj, goalDeleteHandler,
+    passedNavigation, passedSeparator }) {
 
     function handleDelete() {
         goalDeleteHandler(goalObj.id);
@@ -35,8 +35,10 @@ export default function GoalItem({ goalObj,
     }
     return (<View
         style={styles.textBackgroundStyle}>
-        <Pressable onLongPress={() => handleLongPress()}
-        onPress={() => handleNavigation()}
+        <Pressable onPressIn={passedSeparator.highlight}
+            onPressOut={passedSeparator.unhighlight}
+            onLongPress={() => handleLongPress()}
+            onPress={() => handleNavigation()}
             style={({ pressed }) => {
                 return [styles.pressableStyle,
                 {
@@ -51,7 +53,7 @@ export default function GoalItem({ goalObj,
 
             <PressButton passedStyle={styles.pressButtonSyle}
                 passedOnPress={handleDelete}>
-                <AntDesign name="delete" size={24} color='black'/>
+                <AntDesign name="delete" size={24} color='black' />
             </PressButton>
         </Pressable>
     </View>)
