@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Alert } from 'react-native';
 import PressButton from './PressButton';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
@@ -10,6 +10,24 @@ export default function GoalItem({ goalObj,
         goalDeleteHandler(goalObj.id);
     }
 
+    function handleLongPress() {
+        Alert.alert(
+            "Delete goal",
+            "Do you want to delete this goal?",
+            [
+                {
+                    text: "No",
+                    style: "cancel"
+                },
+                {
+                    text: "Yes",
+                    onPress: () => {
+                        handleDelete();
+                    }
+                }
+            ]);
+    }
+
     // make use of the passed navigation from Home.js
     function handleNavigation() {
         passedNavigation.navigate('GoalDetails',
@@ -17,7 +35,8 @@ export default function GoalItem({ goalObj,
     }
     return (<View
         style={styles.textBackgroundStyle}>
-        <Pressable onPress={() => handleNavigation()}
+        <Pressable onLongPress={() => handleLongPress()}
+        onPress={() => handleNavigation()}
             style={({ pressed }) => {
                 return [styles.pressableStyle,
                 {
