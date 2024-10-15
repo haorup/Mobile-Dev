@@ -2,11 +2,13 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Alert } from 'react-native';
 import Header from './Header';
 import Input from './Input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
 import writeToDB from '../Firebase/firestoreHelper';
+import { doc, onSnapshot, collection } from 'firebase/firestore';
+import { database } from '../Firebase/firebaseSetup';
 
 export default function App({ navigation }) {
   const appName = 'Mobile Dev';
@@ -21,12 +23,6 @@ export default function App({ navigation }) {
     // writing data into the database
     let newData = {text: textReceived};
     writeToDB('goals', newData);
-    // add the textReceived to the array of goals
-    let newGoal = { text: textReceived, id: Math.random() };
-    setArrOfGoal((prevGoal) => { return [...prevGoal, newGoal] });
-    console.log("array of goals:", arrOfGoal);
-
-    // setText(textReceived);
     setAppVisibility(false);
   }
 
@@ -63,6 +59,18 @@ export default function App({ navigation }) {
         }
       ]);
   }
+
+  useEffect(() => {
+    onSnapshot(collection(database, 'goals'),
+    (queryShot) => {
+      let newArr = [];
+      let newEntry = {};
+      queryShot.forEach((docSnapshot) => {
+        // console.log(docSnapshot.data());
+        newEntry = docSnapshot.data();
+        newEntry = {...newEntry, id: docSnapshot.id};
+      newArr.push(newEntry);});
+    })}, []);
 
   return (
     <SafeAreaView style={styles.container}>
