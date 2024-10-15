@@ -2,10 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Alert } from 'react-native';
 import Header from './Header';
 import Input from './Input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
+import {writeToDB, deleteDB, deletaAllDB} from '../Firebase/firestoreHelper';
+import { doc, onSnapshot, collection } from 'firebase/firestore';
+import { database } from '../Firebase/firebaseSetup';
+
 
 export default function App({ navigation }) {
   const appName = 'Mobile Dev';
@@ -16,13 +20,10 @@ export default function App({ navigation }) {
 
   // function called when the user confirms the input
   function handleInputData(textReceived) {
-    console.log("input text:", textReceived);
-    // add the textReceived to the array of goals
-    let newGoal = { text: textReceived, id: Math.random() };
-    setArrOfGoal((prevGoal) => { return [...prevGoal, newGoal] });
-    console.log("array of goals:", arrOfGoal);
 
-    // setText(textReceived);
+    // writing data into the database
+    let newData = {text: textReceived};
+    writeToDB('goals', newData);
     setAppVisibility(false);
   }
 
@@ -34,10 +35,12 @@ export default function App({ navigation }) {
 
   // function to delte a goal
   function handleDeleteGoal(goalId) {
-    console.log("Delete goal:", goalId);
-    setArrOfGoal((prevGoal) => {
-      return prevGoal.filter((goal) => goal.id !== goalId);
-    });
+    console.log(goalId);
+    deleteDB(goalId, 'goals');
+    // setArrOfGoal((prevGoal) => {
+    //   return prevGoal.filter((goal) => goal.id !== goalId);
+    // });
+    // deleteDB(goalId, 'goals');
   }
 
   // function to delete all goals
@@ -54,11 +57,25 @@ export default function App({ navigation }) {
         {
           text: "Yes",
           onPress: () => {
-            setArrOfGoal([]);
+            deletaAllDB('goals');
+            // setArrOfGoal([]);
           }
         }
       ]);
   }
+
+  useEffect(() => {
+    onSnapshot(collection(database, 'goals'),
+    (queryShot) => {
+      let newArr = [];
+      let newEntry = {};
+      queryShot.forEach((docSnapshot) => {
+        // console.log(docSnapshot.data());
+        newEntry = docSnapshot.data();
+        newEntry = {...newEntry, id: docSnapshot.id};
+      newArr.push(newEntry);});
+      setArrOfGoal(newArr);
+    })}, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -66,13 +83,13 @@ export default function App({ navigation }) {
       <View style={styles.topView}>
         <Header name={appName}> </Header>
         <View style={styles.buttonStyle}>
-          {/* <Button title='Add a goal'
-            onPress={function () { setAppVisibility(true) }}></Button> */}
-          <PressButton
-            passedOnPress={() => { setAppVisibility(true) }}
-            componentStyle={{ backgroundColor: 'green', borderRadius: 5, alignItems: 'center' }}>
-            <Text style={{ color: 'white', padding: 5 }}>Add a Goal</Text>
-          </PressButton>
+
+            <PressButton
+            passedOnPress={() => {setAppVisibility(true)}}
+            componentStyle={{backgroundColor: 'green', borderRadius:5, alignItems:'center'}}>
+              <Text style={{color: 'white', padding: 5}}>Add a Goal</Text>
+            </PressButton>
+
         </View>
         <Input modalIfVisible={appVisibility}
           ifFocus={isFocus}
