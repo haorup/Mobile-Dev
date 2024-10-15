@@ -68,11 +68,11 @@ export default function App({ navigation }) {
         <View style={styles.buttonStyle}>
           {/* <Button title='Add a goal'
             onPress={function () { setAppVisibility(true) }}></Button> */}
-            <PressButton
-            passedOnPress={() => {setAppVisibility(true)}}
-            componentStyle={{backgroundColor: 'green', borderRadius:5, alignItems:'center'}}>
-              <Text style={{color: 'white', padding: 5}}>Add a Goal</Text>
-            </PressButton>
+          <PressButton
+            passedOnPress={() => { setAppVisibility(true) }}
+            componentStyle={{ backgroundColor: 'green', borderRadius: 5, alignItems: 'center' }}>
+            <Text style={{ color: 'white', padding: 5 }}>Add a Goal</Text>
+          </PressButton>
         </View>
         <Input modalIfVisible={appVisibility}
           ifFocus={isFocus}
@@ -83,24 +83,25 @@ export default function App({ navigation }) {
       <View style={styles.bottomView}>
         {/* using FlatList */}
         <FlatList data={arrOfGoal}
-                  contentContainerStyle={styles.scrollViewStyle}
-                  ListEmptyComponent={<Text style={styles.flatListProp}>
-                    No Goals to show</Text>}
-                  ListHeaderComponent={ arrOfGoal.length > 0
-                    && (<Text style={styles.flatListProp}>
-                    My Goals List</Text>)}
-                  ListFooterComponent={ arrOfGoal.length > 0
-                    && (<Button title='Delete all'
-                      onPress={() => {handleDeleteAll()}}/>)}
-                  ItemSeparatorComponent={<LineSeparator/>}
-                  renderItem={({item}) => {
-                    // console.log("goalObj:", goalObj);
-                    return (
-                      <GoalItem goalObj={item}
-                                goalDeleteHandler={handleDeleteGoal}
-                                passedNavigation={navigation}/>
-                    )
-                  }}/>
+          contentContainerStyle={styles.scrollViewStyle}
+          ListEmptyComponent={<Text style={styles.flatListProp}>
+            No Goals to show</Text>}
+          ListHeaderComponent={arrOfGoal.length > 0
+            && (<Text style={styles.flatListProp}>
+              My Goals List</Text>)}
+          ListFooterComponent={arrOfGoal.length > 0
+            && (<Button title='Delete all'
+              onPress={() => { handleDeleteAll() }} />)}
+          ItemSeparatorComponent={({highlighted}) => (<LineSeparator passedHighlighted={highlighted} />)}
+          renderItem={({ item, separators }) => {
+            return (
+              <GoalItem
+                passedSeparator={separators}
+                goalObj={item}
+                goalDeleteHandler={handleDeleteGoal}
+                passedNavigation={navigation} />
+            )
+          }} />
 
         {/* <ScrollView contentContainerStyle={styles.scrollViewStyle}
           bounces={true}>
