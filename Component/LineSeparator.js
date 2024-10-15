@@ -1,12 +1,13 @@
 import React from 'react'
 import { View } from 'react-native'
 
-export default function LineSeparator() {
+export default function LineSeparator({passedHighlighted}) {
+  console.log(passedHighlighted);
   return (
     <View style={{
-      borderColor: 'black',
+      borderColor: passedHighlighted ? 'red' : 'black',
       borderWidth: 2,
-      marginVertical: 5
+      marginVertical: 5,
     }} />
   )
 }
