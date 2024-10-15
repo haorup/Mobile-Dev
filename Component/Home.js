@@ -6,9 +6,10 @@ import { useEffect, useState } from 'react';
 import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
-import {writeToDB, deleteDB} from '../Firebase/firestoreHelper';
+import {writeToDB, deleteDB, deletaAllDB} from '../Firebase/firestoreHelper';
 import { doc, onSnapshot, collection } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
+
 
 export default function App({ navigation }) {
   const appName = 'Mobile Dev';
@@ -35,9 +36,11 @@ export default function App({ navigation }) {
   // function to delte a goal
   function handleDeleteGoal(goalId) {
     console.log("Delete goal:", goalId);
-    setArrOfGoal((prevGoal) => {
-      return prevGoal.filter((goal) => goal.id !== goalId);
-    });
+    deleteDB(goalId, 'goals');
+    // setArrOfGoal((prevGoal) => {
+    //   return prevGoal.filter((goal) => goal.id !== goalId);
+    // });
+    // deleteDB(goalId, 'goals');
   }
 
   // function to delete all goals
@@ -54,7 +57,8 @@ export default function App({ navigation }) {
         {
           text: "Yes",
           onPress: () => {
-            setArrOfGoal([]);
+            deletaAllDB('goals');
+            // setArrOfGoal([]);
           }
         }
       ]);
@@ -70,6 +74,7 @@ export default function App({ navigation }) {
         newEntry = docSnapshot.data();
         newEntry = {...newEntry, id: docSnapshot.id};
       newArr.push(newEntry);});
+      setArrOfGoal(newArr);
     })}, []);
 
   return (
