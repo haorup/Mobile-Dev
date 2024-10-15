@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
-import writeToDB from '../Firebase/firestoreHelper';
+import {writeToDB, deleteDB} from '../Firebase/firestoreHelper';
 import { doc, onSnapshot, collection } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
 
@@ -78,8 +78,6 @@ export default function App({ navigation }) {
       <View style={styles.topView}>
         <Header name={appName}> </Header>
         <View style={styles.buttonStyle}>
-          {/* <Button title='Add a goal'
-            onPress={function () { setAppVisibility(true) }}></Button> */}
             <PressButton
             passedOnPress={() => {setAppVisibility(true)}}
             componentStyle={{backgroundColor: 'green', borderRadius:5, alignItems:'center'}}>
