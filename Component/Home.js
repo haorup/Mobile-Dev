@@ -6,6 +6,7 @@ import { useState } from 'react';
 import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
+import writeToDB from '../Firebase/firestoreHelper';
 
 export default function App({ navigation }) {
   const appName = 'Mobile Dev';
@@ -16,7 +17,10 @@ export default function App({ navigation }) {
 
   // function called when the user confirms the input
   function handleInputData(textReceived) {
-    console.log("input text:", textReceived);
+
+    // writing data into the database
+    let newData = {text: textReceived};
+    writeToDB('goals', newData);
     // add the textReceived to the array of goals
     let newGoal = { text: textReceived, id: Math.random() };
     setArrOfGoal((prevGoal) => { return [...prevGoal, newGoal] });
