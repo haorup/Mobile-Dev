@@ -35,7 +35,7 @@ export default function App({ navigation }) {
 
   // function to delte a goal
   function handleDeleteGoal(goalId) {
-    console.log("Delete goal:", goalId);
+    console.log(goalId);
     deleteDB(goalId, 'goals');
     // setArrOfGoal((prevGoal) => {
     //   return prevGoal.filter((goal) => goal.id !== goalId);
