@@ -1,7 +1,7 @@
 import {
     addDoc, collection,
     deleteDoc, doc, getDocs,
-    updateDoc
+    setDoc
 } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 
@@ -35,11 +35,12 @@ export async function deletaAllDB(collectionName) {
 }
 
 export async function addWarningField(collectionName, goalId) {
+    if (goalId === 'No ID') {
+        console.log("No ID provided");
+    }
     try {
         const docRef = doc(database, collectionName, goalId);
-        await updateDoc(docRef, {
-            warning: true,
-        });
+        await setDoc(docRef, { warning: true }, { merge: true });
     } catch (e) {
         console.error("Error adding warning field: ", e);
     }

@@ -15,13 +15,13 @@ export default function GoalDetails({ navigation, route }) {
   }
 
   function warningHandler() {
+    let tempGoalId = route?.params?.goalData?.id || 'No ID';
     setIsRedColor(!isRedColor);
     navigation.setOptions({
       title: "Warning",
       headerTintColor: 'red',
     });
-    addWarningField('goals', route.params.goalData.id);
-
+    addWarningField('goals', tempGoalId);
   }
 
   React.useEffect(() => {
