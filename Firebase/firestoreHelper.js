@@ -1,10 +1,14 @@
-import {addDoc, collection, deleteDoc, doc, getDocs} from "firebase/firestore";
-import {database} from "./firebaseSetup";
+import {
+    addDoc, collection,
+    deleteDoc, doc, getDocs,
+    setDoc
+} from "firebase/firestore";
+import { database } from "./firebaseSetup";
 
 export async function writeToDB(collectionName, data) {
     try {
-    const docRef = await addDoc(collection(database, collectionName), data);
-    console.log(docRef);
+        const docRef = await addDoc(collection(database, collectionName), data);
+        console.log(docRef);
     } catch (e) {
         console.error("Error adding document: ", e);
     }
@@ -28,4 +32,17 @@ export async function deletaAllDB(collectionName) {
     } catch (e) {
         console.error("Error deleting all documents: ", e);
     }
+}
+
+export async function addWarningField(collectionName, goalId) {
+    if (goalId === 'No ID') {
+        console.log("No ID provided");
+    }
+    try {
+        const docRef = doc(database, collectionName, goalId);
+        await setDoc(docRef, { warning: true }, { merge: true });
+    } catch (e) {
+        console.error("Error adding warning field: ", e);
+    }
+
 }

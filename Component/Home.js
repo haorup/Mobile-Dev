@@ -37,10 +37,6 @@ export default function App({ navigation }) {
   function handleDeleteGoal(goalId) {
     console.log(goalId);
     deleteDB(goalId, 'goals');
-    // setArrOfGoal((prevGoal) => {
-    //   return prevGoal.filter((goal) => goal.id !== goalId);
-    // });
-    // deleteDB(goalId, 'goals');
   }
 
   // function to delete all goals
@@ -58,24 +54,26 @@ export default function App({ navigation }) {
           text: "Yes",
           onPress: () => {
             deletaAllDB('goals');
-            // setArrOfGoal([]);
           }
         }
       ]);
   }
 
   useEffect(() => {
-    onSnapshot(collection(database, 'goals'),
+    const unsubscribe = onSnapshot(collection(database, 'goals'),
     (queryShot) => {
       let newArr = [];
       let newEntry = {};
       queryShot.forEach((docSnapshot) => {
-        // console.log(docSnapshot.data());
         newEntry = docSnapshot.data();
         newEntry = {...newEntry, id: docSnapshot.id};
       newArr.push(newEntry);});
       setArrOfGoal(newArr);
-    })}, []);
+    });
+    return () => {
+      unsubscribe(); // unsubscribe from the snapshot
+    }
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
