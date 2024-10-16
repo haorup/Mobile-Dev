@@ -29,3 +29,15 @@ export async function deletaAllDB(collectionName) {
         console.error("Error deleting all documents: ", e);
     }
 }
+
+export async function addWarningField(collectionName, goalId) {
+    try {
+        const docRef = doc(database, collectionName, goalId);
+        await updateDoc(docRef, {
+            warning: true,
+        });
+    } catch (e) {
+        console.error("Error adding warning field: ", e);
+    }
+
+}
