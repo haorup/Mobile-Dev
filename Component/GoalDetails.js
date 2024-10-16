@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import PressButton from './PressButton';
+import { addWarningField } from '../Firebase/firestoreHelper';
 
 export default function GoalDetails({ navigation, route }) {
 
@@ -18,7 +19,9 @@ export default function GoalDetails({ navigation, route }) {
     navigation.setOptions({
       title: "Warning",
       headerTintColor: 'red',
-    })
+    });
+    addWarningField('goals', route.params.goalData.id);
+
   }
 
   React.useEffect(() => {
