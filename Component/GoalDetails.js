@@ -4,6 +4,7 @@ import { useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import PressButton from './PressButton';
 import { addWarningField } from '../Firebase/firestoreHelper';
+import GoalUsers from './GoalUsers';
 
 export default function GoalDetails({ navigation, route }) {
 
@@ -45,6 +46,7 @@ export default function GoalDetails({ navigation, route }) {
           </Text>
           <Button title="More Details" color={isRedColor ? 'red' : 'blue'}
           onPress={moreDetailHandler} />
+          <GoalUsers id={route.params.goalData.id}/>
         </View>
       ) : (
         <Text style={textStyle}>No more Details</Text>
