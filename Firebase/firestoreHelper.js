@@ -45,15 +45,16 @@ export async function addWarningField(collectionName, goalId) {
 }
 
 export async function getAllDocs(collectionName) {
-    const querySnapshot = await getDocs(collection(database, collectionName));
-    const data = [];
-    try{
-    if (querySnapshot.empty) {
-    querySnapshot.forEach((doc) => {
-        data.push(doc.data());
-    });
-    return data;
-} }catch (e) {
-    console.error("Error getting documents: ", e);
-}
+    try {
+        const querySnapshot = await getDocs(collection(database, collectionName));
+        const data = [];
+        if (!querySnapshot.empty) {
+            querySnapshot.forEach((docdata) => {
+                data.push(docdata.data());
+            });
+        }
+        return data;
+    } catch (e) {
+        console.error("Error getting documents: ", e);
+    }
 }
