@@ -1,10 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { Dimensions } from 'react-native';
+import { useWindowDimensions } from 'react-native';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Header = ({ name }) => {
+  const {width, height} = useWindowDimensions();
 
   return (
     <View>
