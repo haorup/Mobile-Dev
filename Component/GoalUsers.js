@@ -6,16 +6,15 @@ export default function GoalUsers({id}) {
     const [users, setUsers] = useState([]);
     useEffect(() => {
         async function fetchData() {
-            const dataFromDB = await getAllDocs(`goals/${id}/users`);
+            // const dataFromDB = await getAllDocs(`goals/${id}/users`);
             try {
             const response = await fetch("https://jsonplaceholder.typicode.com/users");
             if (!response.ok) {
                 throw new Error("HTTP Error! status: " + response.status);
             }
             const data = await response.json();
-            console.log("data", data[0].name);
             data.forEach((user)=> {writeToDB(`goals/${id}/users`, user)})
-            setUsers(data.map((user) => {return user.name}));
+            setUsers(data.map((user) => user.name));
         } catch (error) {
             console.error("Error fetching data: ", error);
         }
@@ -25,10 +24,10 @@ export default function GoalUsers({id}) {
 
   return (
     <View>
-      <FlatList>
+      <FlatList
         data={users}
         renderItem={({ item }) => <Text>{item}</Text>}
-      </FlatList>
+      />
     </View>
   )
 }
