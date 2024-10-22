@@ -44,5 +44,18 @@ export async function addWarningField(collectionName, goalId) {
     } catch (e) {
         console.error("Error adding warning field: ", e);
     }
+}
 
+export async function getAllDocs(collectionName) {
+    const querySnapshot = await getDocs(collection(database, collectionName));
+    const data = [];
+    try{
+    if (querySnapshot.empty) {
+    querySnapshot.forEach((doc) => {
+        data.push(doc.data());
+    });
+    return data;
+} }catch (e) {
+    console.error("Error getting documents: ", e);
+}
 }
