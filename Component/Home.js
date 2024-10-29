@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
-import {writeToDB, deleteDB, deletaAllDB} from '../Firebase/firestoreHelper';
+import { writeToDB, deleteDB, deletaAllDB } from '../Firebase/firestoreHelper';
 import { doc, onSnapshot, collection } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
 
@@ -18,11 +18,11 @@ export default function App({ navigation }) {
   // const [text, setText] = useState('');
   const [arrOfGoal, setArrOfGoal] = useState([]);
 
+
   // function called when the user confirms the input
   function handleInputData(textReceived) {
-
     // writing data into the database
-    let newData = {text: textReceived};
+    let newData = { text: textReceived };
     writeToDB('goals', newData);
     setAppVisibility(false);
   }
@@ -61,15 +61,16 @@ export default function App({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = onSnapshot(collection(database, 'goals'),
-    (queryShot) => {
-      let newArr = [];
-      let newEntry = {};
-      queryShot.forEach((docSnapshot) => {
-        newEntry = docSnapshot.data();
-        newEntry = {...newEntry, id: docSnapshot.id};
-      newArr.push(newEntry);});
-      setArrOfGoal(newArr);
-    });
+      (queryShot) => {
+        let newArr = [];
+        let newEntry = {};
+        queryShot.forEach((docSnapshot) => {
+          newEntry = docSnapshot.data();
+          newEntry = { ...newEntry, id: docSnapshot.id };
+          newArr.push(newEntry);
+        });
+        setArrOfGoal(newArr);
+      });
     return () => {
       unsubscribe(); // unsubscribe from the snapshot
     }
@@ -81,12 +82,11 @@ export default function App({ navigation }) {
       <View style={styles.topView}>
         <Header name={appName}> </Header>
         <View style={styles.buttonStyle}>
-
-            <PressButton
-            passedOnPress={() => {setAppVisibility(true)}}
-            componentStyle={{backgroundColor: 'green', borderRadius:5, alignItems:'center'}}>
-              <Text style={{color: 'white', padding: 5}}>Add a Goal</Text>
-            </PressButton>
+          <PressButton
+            passedOnPress={() => { setAppVisibility(true) }}
+            componentStyle={{ backgroundColor: 'green', borderRadius: 5, alignItems: 'center' }}>
+            <Text style={{ color: 'white', padding: 5 }}>Add a Goal</Text>
+          </PressButton>
 
         </View>
         <Input modalIfVisible={appVisibility}
@@ -107,7 +107,7 @@ export default function App({ navigation }) {
           ListFooterComponent={arrOfGoal.length > 0
             && (<Button title='Delete all'
               onPress={() => { handleDeleteAll() }} />)}
-          ItemSeparatorComponent={({highlighted}) => (<LineSeparator passedHighlighted={highlighted} />)}
+          ItemSeparatorComponent={({ highlighted }) => (<LineSeparator passedHighlighted={highlighted} />)}
           renderItem={({ item, separators }) => {
             return (
               <GoalItem
