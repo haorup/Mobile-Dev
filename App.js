@@ -14,12 +14,11 @@ import ProfileScreen from './Component/ProfileScreen';
 import PressButton from './Component/PressButton';
 import { signOut } from 'firebase/auth';
 
-
 const Stack = createNativeStackNavigator();
 const AuthStack = (
   <>
-    <Stack.Screen name='Signup' component={Signup} />
     <Stack.Screen name='Login' component={Login} />
+    <Stack.Screen name='Signup' component={Signup} />
   </>
 )
 const AppStack = (
@@ -27,17 +26,17 @@ const AppStack = (
     <Stack.Screen name="Home"
       component={Home}
       options={
-        ({route, navigation}) => {
-        return {
-        title: 'Home',
-          headerRight: () => {
-            return (
-              <PressButton passedOnPress={()=>{navigation.navigate('ProfileScreen')}}>
-            <MaterialCommunityIcons name="account" size={24} color="black" />
-            </PressButton>);
-        }
-      }
-      }} />
+        ({ route, navigation }) => {
+          return {
+            title: 'Home',
+            headerRight: () => {
+              return (
+                <PressButton passedOnPress={function () { navigation.navigate('ProfileScreen') }}>
+                  <MaterialCommunityIcons name="account" size={24} color="black" />
+                </PressButton>);
+            }
+          }
+        }} />
     <Stack.Screen name="GoalDetails" component={GoalDetails}
       options={({ route }) => {
         return {
@@ -49,14 +48,14 @@ const AppStack = (
           // }
         }
       }} />
-      <Stack.Screen name='ProfileScreen' component={ProfileScreen}
-      options={()=> {
+    <Stack.Screen name='ProfileScreen' component={ProfileScreen}
+      options={() => {
         return {
           headerRight: () => {
             return (
-              <PressButton passedOnPress={()=>{signOut(auth)}}>
-            <MaterialCommunityIcons name="logout" size={24} color="black" />
-            </PressButton>
+              <PressButton passedOnPress={() => { signOut(auth) }}>
+                <MaterialCommunityIcons name="logout" size={24} color="black" />
+              </PressButton>
             )
           }
         }
