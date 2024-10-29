@@ -25,24 +25,64 @@ export default function Login({navigation}) {
         }
     }
   return (
-    <View>
-      <Text>Email address</Text>
-      <TextInput placeholder='Email'
+    <View style={styles.container}>
+
+      <Text style={styles.text}>Email address</Text>
+      <TextInput style={styles.input}
+      placeholder='Email'
       value={emailVar}
+      secureTextEntry={false}
       onChangeText={setEmailVar} />
-      <Text>Password</Text>
-      <TextInput placeholder='Password'
+
+      <Text style={styles.text}>Password</Text>
+      <TextInput style={styles.input}
+      secureTextEntry={true}
+      placeholder='Password'
       value={passwordVar}
       onChangeText={setPasswordVar} />
-      <PressButton passedOnPress={handleLogin}>
-        <Text>Login</Text>
+
+      {/* button section */}
+      <PressButton componentStyle={styles.buttonStyle}
+      passedOnPress={handleLogin}>
+        <Text style={[styles.text, { fontSize: 15 }]}>Login</Text>
       </PressButton>
-      <PressButton
+
+      <PressButton componentStyle={styles.buttonStyle}
       passedOnPress={handleNavigation}>
-        <Text>New user? Create an account</Text>
+        <Text style={[styles.text, { fontSize: 15 }]}>New user? Create an account</Text>
       </PressButton>
     </View>
   )
 }
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'lightgreen',
+    justifyContent: 'center',
+},
+text: {
+    fontSize: 20,
+    color: 'black',
+    fontWeight: 'bold',
+    margin: 0,
+    paddingLeft: 10,
+},
+input: {
+    borderWidth: 1,
+    borderRadius: 5,
+    width: '90%',
+    padding: 10,
+    margin: 10,
+    fontSize: 20,
+},
+buttonStyle: {
+    backgroundColor: 'lightblue',
+    padding: 10,
+    margin: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+    width: '70%',
+    alignSelf: 'center',
+},
+})

@@ -42,17 +42,21 @@ export default function Signup() {
                 placeholder='Email'
                 value={valueVar}
                 onChangeText={setValueVar} />
+
             <Text style={styles.text}>Password</Text>
             <TextInput style={styles.input}
                 placeholder='Password'
+                secureTextEntry={true}
                 value={passwordVar}
                 onChangeText={setPasswordVar} />
+
             <Text style={styles.text}>Confirm Password</Text>
             <TextInput style={styles.input}
                 placeholder='Confirm Password'
+                secureTextEntry={true}
                 value={confirmPassword}
                 onChangeText={setConfirmPassword} />
-
+            {/* button section */}
             <PressButton passedOnPress={handleSignUp}
                 componentStyle={styles.buttonStyle}>
                 <Text style={[styles.text, { fontSize: 15 }]}>Register</Text>
@@ -70,10 +74,7 @@ export default function Signup() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // padding: 10,
-        // margin: 10,
         backgroundColor: 'lightgreen',
-        // alignItems: 'center',
         justifyContent: 'center',
     },
     text: {
