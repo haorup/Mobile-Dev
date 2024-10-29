@@ -18,8 +18,10 @@ export default function Signup() {
     const handleSignUp = async () => {
         try {
         if (valueVar.trim() !== '' &&
-            passwordVar.trim() !== '')
-            createUserWithEmailAndPassword(auth, valueVar, passwordVar);
+            passwordVar.trim() !== '') {
+            const usrCred = await createUserWithEmailAndPassword(auth, valueVar, passwordVar);
+            }
+
         } catch (error) {
             console.log('error', error)
         }
