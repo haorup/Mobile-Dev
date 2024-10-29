@@ -22,6 +22,7 @@ export default function Login({navigation}) {
             const userCred = await signInWithEmailAndPassword(auth, emailVar, passwordVar);
         } catch (error) {
             console.log('error', error)
+            Alert.alert('Failed to login')
         }
     }
   return (

@@ -6,8 +6,8 @@ import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../Firebase/firebaseSetup'
 
 
-export default function Signup() {
-    const navigation = useNavigation()
+export default function Signup({navigation}) {
+    // const navigation = useNavigation()
     const [valueVar, setValueVar] = useState('')
     const [passwordVar, setPasswordVar] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
@@ -32,7 +32,6 @@ export default function Signup() {
         } catch (error) {
             console.log('error', error)
         }
-        navigation.replace('Login');
     }
 
     return (
