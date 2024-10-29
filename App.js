@@ -1,18 +1,20 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Home from './Component/Home';
 import GoalDetails from './Component/GoalDetails';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './Component/Login';
 import Signup from './Component/Signup';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './Firebase/firebaseSetup';
+import { useState } from 'react';
 
 const Stack = createNativeStackNavigator();
 const AuthStack = (
   <>
   <Stack.Screen name='Signup' component={Signup} />
   <Stack.Screen name='Login' component={Login} /></>
-
 )
 const AppStack = (
   <>
@@ -34,6 +36,19 @@ const AppStack = (
 )
 
 export default function App() {
+  const [isLogged, setIsLogged] = useState(false)
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log('user', user);
+      if (user) {
+        setIsLogged(true);
+      } else {
+        setIsLogged(false);
+      }
+    }
+    )
+  }, []);
+
   return (
     < NavigationContainer >
       {/* <Home /> */}
@@ -43,8 +58,7 @@ export default function App() {
         headerTintColor: 'green',
         backgroundColor: 'lightgreen',
       }}>
-
-
+        {isLogged ? AppStack : AuthStack}
       </Stack.Navigator>
     </NavigationContainer>
   )

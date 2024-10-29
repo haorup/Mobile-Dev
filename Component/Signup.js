@@ -25,6 +25,7 @@ export default function Signup() {
         } catch (error) {
             console.log('error', error)
         }
+        navigation.replace('Login');
     }
 
     return (
