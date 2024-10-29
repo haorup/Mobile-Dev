@@ -8,20 +8,15 @@ import Login from './Component/Login';
 import Signup from './Component/Signup';
 
 const Stack = createNativeStackNavigator();
+const AuthStack = (
+  <>
+  <Stack.Screen name='Signup' component={Signup} />
+  <Stack.Screen name='Login' component={Login} /></>
 
-export default function App() {
-  return (
-    < NavigationContainer >
-      {/* <Home /> */}
-      <Stack.Navigator screenOptions={{
-        initialRouteName: 'Signup',
-        headerStyle: { backgroundColor: 'yellow' },
-        headerTintColor: 'green',
-        backgroundColor: 'lightgreen',
-      }}>
-        <Stack.Screen name='Signup' component={Signup} />
-        <Stack.Screen name='Login' component={Login} />
-        <Stack.Screen name="Home"
+)
+const AppStack = (
+  <>
+  <Stack.Screen name="Home"
           component={Home}
           options={{ title: 'Home'}} />
         <Stack.Screen name="GoalDetails" component={GoalDetails}
@@ -35,6 +30,21 @@ export default function App() {
               // }
             }
           }} />
+  </>
+)
+
+export default function App() {
+  return (
+    < NavigationContainer >
+      {/* <Home /> */}
+      <Stack.Navigator screenOptions={{
+        initialRouteName: 'Signup',
+        headerStyle: { backgroundColor: 'yellow' },
+        headerTintColor: 'green',
+        backgroundColor: 'lightgreen',
+      }}>
+
+
       </Stack.Navigator>
     </NavigationContainer>
   )
