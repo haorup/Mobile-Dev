@@ -9,34 +9,63 @@ import Signup from './Component/Signup';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './Firebase/firebaseSetup';
 import { useState } from 'react';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import ProfileScreen from './Component/ProfileScreen';
+import PressButton from './Component/PressButton';
+
 
 const Stack = createNativeStackNavigator();
 const AuthStack = (
   <>
-  <Stack.Screen name='Signup' component={Signup} />
-  <Stack.Screen name='Login' component={Login} /></>
+    <Stack.Screen name='Signup' component={Signup} />
+    <Stack.Screen name='Login' component={Login} />
+  </>
 )
 const AppStack = (
   <>
-  <Stack.Screen name="Home"
-          component={Home}
-          options={{ title: 'Home'}} />
-        <Stack.Screen name="GoalDetails" component={GoalDetails}
-          options={({ route }) => {
-            return {
-              title: route.params
-                ? route.params.goalData.text
-                : "undefined details",
-              // headerRight: () => {
-              //   return (<Button title='Warnings'/>)
-              // }
-            }
-          }} />
+    <Stack.Screen name="Home"
+      component={Home}
+      options={
+        ({route, navigation}) => {
+        return {
+        title: 'Home',
+          headerRight: () => {
+            return (
+              <PressButton passedOnPress={()=>{navigation.navigate('ProfileScreen')}}>
+            <MaterialCommunityIcons name="account" size={24} color="black" />
+            </PressButton>);
+        }
+      }
+      }} />
+    <Stack.Screen name="GoalDetails" component={GoalDetails}
+      options={({ route }) => {
+        return {
+          title: route.params
+            ? route.params.goalData.text
+            : "undefined details",
+          // headerRight: () => {
+          //   return (<Button title='Warnings'/>)
+          // }
+        }
+      }} />
+      <Stack.Screen name='ProfileScreen' component={ProfileScreen}
+      options={()=> {
+        return {
+          headerRight: () => {
+            return (
+              <PressButton passedOnPress={()=>{navigation.navigate('ProfileScreen')}}>
+            <MaterialCommunityIcons name="logout" size={24} color="black" />
+            </PressButton>
+            )
+          }
+        }
+      }} />
   </>
 )
 
 export default function App() {
   const [isLogged, setIsLogged] = useState(false)
+
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user);
