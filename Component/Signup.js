@@ -1,14 +1,16 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Alert } from 'react-native'
 import React, { useState } from 'react'
 import PressButton from './PressButton'
 import { useNavigation } from '@react-navigation/native'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../Firebase/firebaseSetup'
 
+
 export default function Signup() {
     const navigation = useNavigation()
     const [valueVar, setValueVar] = useState('')
     const [passwordVar, setPasswordVar] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
 
     function handleNavigation() {
         navigation.replace('Login')
@@ -17,11 +19,16 @@ export default function Signup() {
     // check if
     const handleSignUp = async () => {
         try {
-        if (valueVar.trim() !== '' &&
-            passwordVar.trim() !== '') {
-            const usrCred = await createUserWithEmailAndPassword(auth, valueVar, passwordVar);
+            if (valueVar.trim() === '' ||
+                passwordVar.trim().length < 6 ||
+                passwordVar.trim().length < 6) {
+                alert('Please enter valid inputs');
+            } else if (passwordVar.trim() !== confirmPassword.trim()) {
+                Alert.alert('Passwords do not match');
+            } else {
+                const userCredential = await
+                createUserWithEmailAndPassword(auth, valueVar, passwordVar);
             }
-
         } catch (error) {
             console.log('error', error)
         }
@@ -30,24 +37,31 @@ export default function Signup() {
 
     return (
         <View style={styles.container}>
-            <Text>Email address</Text>
-            <TextInput placeholder='Email'
+            <Text style={styles.text}>Email address</Text>
+            <TextInput style={styles.input}
+                placeholder='Email'
                 value={valueVar}
                 onChangeText={setValueVar} />
-            <Text>Password</Text>
-            <TextInput placeholder='Password'
+            <Text style={styles.text}>Password</Text>
+            <TextInput style={styles.input}
+                placeholder='Password'
                 value={passwordVar}
                 onChangeText={setPasswordVar} />
-            <Text>Confirm Password</Text>
-            <TextInput placeholder='Confirm Password' />
+            <Text style={styles.text}>Confirm Password</Text>
+            <TextInput style={styles.input}
+                placeholder='Confirm Password'
+                value={confirmPassword}
+                onChangeText={setConfirmPassword} />
 
-            <PressButton passedOnPress={handleSignUp}>
-                <Text>Register</Text>
+            <PressButton passedOnPress={handleSignUp}
+                componentStyle={styles.buttonStyle}>
+                <Text style={[styles.text, { fontSize: 15 }]}>Register</Text>
             </PressButton>
 
             <PressButton
-                passedOnPress={handleNavigation}>
-                <Text>Already registered? Login</Text>
+                passedOnPress={handleNavigation}
+                componentStyle={styles.buttonStyle}>
+                <Text style={[styles.text, { fontSize: 15 }]}>Already registered? Login</Text>
             </PressButton>
         </View>
     )
@@ -55,10 +69,35 @@ export default function Signup() {
 
 const styles = StyleSheet.create({
     container: {
-        dlex: 1,
+        flex: 1,
+        // padding: 10,
+        // margin: 10,
+        backgroundColor: 'lightgreen',
+        // alignItems: 'center',
+        justifyContent: 'center',
+    },
+    text: {
+        fontSize: 20,
+        color: 'black',
+        fontWeight: 'bold',
+        margin: 0,
+        paddingLeft: 10,
+    },
+    input: {
+        borderWidth: 1,
+        borderRadius: 5,
+        width: '90%',
         padding: 10,
         margin: 10,
-        backgroundColor: 'lightgreen',
+        fontSize: 20,
+    },
+    buttonStyle: {
+        backgroundColor: 'lightblue',
+        padding: 10,
+        margin: 10,
         alignItems: 'center',
-    }
+        borderRadius: 5,
+        width: '60%',
+        alignSelf: 'center',
+    },
 })

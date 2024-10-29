@@ -1,6 +1,11 @@
 import { StyleSheet, Text, View, TextInput } from 'react-native'
 import React from 'react'
 import PressButton from './PressButton'
+import { useNavigation } from '@react-navigation/native'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../Firebase/firebaseSetup'
+import { useState } from 'react'
+import { Alert } from 'react-native'
 
 export default function Login({navigation}) {
     const [emailVar, setEmailVar] = useState('')

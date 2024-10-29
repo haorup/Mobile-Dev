@@ -14,7 +14,6 @@ import ProfileScreen from './Component/ProfileScreen';
 import PressButton from './Component/PressButton';
 import { signOut } from 'firebase/auth';
 
-
 const Stack = createNativeStackNavigator();
 const AuthStack = (
   <>
@@ -32,7 +31,7 @@ const AppStack = (
         title: 'Home',
           headerRight: () => {
             return (
-              <PressButton passedOnPress={()=>{navigation.navigate('ProfileScreen')}}>
+              <PressButton passedOnPress={function(){navigation.navigate('ProfileScreen')}}>
             <MaterialCommunityIcons name="account" size={24} color="black" />
             </PressButton>);
         }
