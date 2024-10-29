@@ -12,6 +12,7 @@ import { useState } from 'react';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import ProfileScreen from './Component/ProfileScreen';
 import PressButton from './Component/PressButton';
+import { signOut } from 'firebase/auth';
 
 
 const Stack = createNativeStackNavigator();
@@ -53,7 +54,7 @@ const AppStack = (
         return {
           headerRight: () => {
             return (
-              <PressButton passedOnPress={()=>{navigation.navigate('ProfileScreen')}}>
+              <PressButton passedOnPress={()=>{signOut(auth)}}>
             <MaterialCommunityIcons name="logout" size={24} color="black" />
             </PressButton>
             )
