@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Button, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { launchCameraAsync, MediaTypeOptions, useCameraPermissions } from 'expo-image-picker'
 
-export default function ImageManager() {
+export default function ImageManager({ passImageUri }) {
     const [response, requestPermission] = useCameraPermissions();
     const [image, setImage] = useState(null);
     async function verifyPermission() {
@@ -33,6 +33,7 @@ export default function ImageManager() {
         console.log(result);
         if (!result.canceled) {
         setImage(result.assets[0].uri);
+        passImageUri(result.assets[0].uri);
         }
     } catch (error) {
             console.log(error)
