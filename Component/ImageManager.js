@@ -27,7 +27,7 @@ export default function ImageManager({ passImageUri }) {
                 mediaTypes: MediaTypeOptions.All,
                 allowsEditing: true,
                 aspect: [4, 3],
-                quality: 1,
+                quality: 0.1,
             }
         );
         console.log(result);
