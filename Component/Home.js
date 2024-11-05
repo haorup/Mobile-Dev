@@ -7,8 +7,10 @@ import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
 import { writeToDB, deleteDB, deletaAllDB } from '../Firebase/firestoreHelper';
-import { doc, onSnapshot, collection } from 'firebase/firestore';
+import { doc, onSnapshot, collection, where } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
+import { auth } from '../Firebase/firebaseSetup';
+import { query } from 'firebase/firestore';
 
 
 export default function App({ navigation }) {
@@ -23,6 +25,7 @@ export default function App({ navigation }) {
   function handleInputData(textReceived) {
     // writing data into the database
     let newData = { text: textReceived };
+    newData = { ...newData, owner: auth.CurrentUser.uid };
     writeToDB('goals', newData);
     setAppVisibility(false);
   }
@@ -60,7 +63,10 @@ export default function App({ navigation }) {
   }
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(collection(database, 'goals'),
+    const unsubscribe = onSnapshot(
+      // update the listner to the goals collection
+      query(collection(database, 'goals'),
+    where('owner', '==', auth.currentUser.uid)),
       (queryShot) => {
         let newArr = [];
         let newEntry = {};
