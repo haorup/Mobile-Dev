@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, SafeAreaView, ScrollView, FlatList, Alert } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView, FlatList, Alert } from 'react-native';
 import Header from './Header';
 import Input from './Input';
 import { useEffect, useState } from 'react';
@@ -7,7 +7,7 @@ import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
 import {writeToDB, deleteDB, deletaAllDB} from '../Firebase/firestoreHelper';
-import { doc, onSnapshot, collection } from 'firebase/firestore';
+import { onSnapshot, collection } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
 
 
@@ -20,7 +20,6 @@ export default function App({ navigation }) {
 
   // function called when the user confirms the input
   function handleInputData(textReceived) {
-
     // writing data into the database
     let newData = {text: textReceived};
     writeToDB('goals', newData);
