@@ -4,6 +4,7 @@ import {
 } from 'react-native'
 import { useState, useEffect } from 'react'
 import React from 'react'
+import ImageManager from './ImageManager';
 
 
 const Input = ({ ifFocus,
@@ -90,6 +91,8 @@ const Input = ({ ifFocus,
           onBlur={() => setIsFocused(false)}>
         </TextInput>
         <Text>{textCount}</Text>
+
+        <ImageManager />
 
         {/* Confirm and Cancel buttons */}
         <View style={styles.buttonStyle}>
