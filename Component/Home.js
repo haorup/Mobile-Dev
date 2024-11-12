@@ -37,11 +37,14 @@ export default function App({ navigation }) {
     // writing data into the database
     let newData = { text: data.text };
     let uri = '';
-    if (data.imageUri) {
+    if (!data.imageUri) {
       uri = data.imageUri;
-      await fetchAndUploadImage(uri);
+      savedURI = await fetchAndUploadImage(uri);
     }
     newData = { ...newData, owner: auth.currentUser.uid };
+    // if (savedURI) {
+    //   newData = { ...newData, imageUri: savedURI };
+    // }
     writeToDB('goals', newData);
     setAppVisibility(false);
   }
