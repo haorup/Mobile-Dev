@@ -22,10 +22,10 @@ export default function App({ navigation }) {
 
 
   // function called when the user confirms the input
-  function handleInputData(textReceived) {
+  function handleInputData(data) {
     // writing data into the database
-    let newData = { text: textReceived };
-    newData = { ...newData, owner: auth.CurrentUser.uid };
+    let newData = { text: data.text };
+    newData = { ...newData, owner: auth.currentUser.uid };
     writeToDB('goals', newData);
     setAppVisibility(false);
   }

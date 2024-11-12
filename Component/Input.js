@@ -4,17 +4,19 @@ import {
 } from 'react-native'
 import { useState, useEffect } from 'react'
 import React from 'react'
+import ImageManager from './ImageManager';
 
 
 const Input = ({ ifFocus,
   textInputHandler,
   modalHandler,
-  modalIfVisible }) => {
+  modalIfVisible, }) => {
 
   const [text, setText] = useState('');  // State to hold the text input
   const [textCount, setTextCount] = useState(''); // State to hold the text count
   const [isFocused, setIsFocused] = useState(true); // State to hold the focus status
   const [isConfrmDisabled, setIsConfirmDisabled] = useState(true); // State to hold the confirm button status
+  const [imageUri, setImageUri] = useState(null); // State to hold the image uri
 
   useEffect(() => {
     const updateTextCount = () => {
@@ -37,9 +39,14 @@ const Input = ({ ifFocus,
 
   // Function to handle the confirm button
   function handleConfirm() {
-    textInputHandler(text);
+    textInputHandler({text, imageUri});
     setText(''); // Clear the text input in the modal
   };
+
+  // Function to receive the image uri
+  function receiveImage(uri) {
+    setImageUri(uri);
+  }
 
   // Function to handle the cancel button
   function handleCancel() {
@@ -63,7 +70,6 @@ const Input = ({ ifFocus,
   }
 
   return (
-
     <Modal visible={modalIfVisible}
       animationType='slide'
       transparent={true}>
@@ -90,6 +96,8 @@ const Input = ({ ifFocus,
           onBlur={() => setIsFocused(false)}>
         </TextInput>
         <Text>{textCount}</Text>
+
+        <ImageManager passImageUri={receiveImage}/>
 
         {/* Confirm and Cancel buttons */}
         <View style={styles.buttonStyle}>
