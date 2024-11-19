@@ -14,6 +14,15 @@ import ProfileScreen from './Component/ProfileScreen';
 import PressButton from './Component/PressButton';
 import { signOut } from 'firebase/auth';
 import Maps from './Component/Maps';
+import * as  Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  async handleNotification() {
+    return {shouldPlaySound: true,
+    shouldShowAlert: true,
+    shouldSetBadge: true}
+    }
+  });
 
 const Stack = createNativeStackNavigator();
 const AuthStack = (

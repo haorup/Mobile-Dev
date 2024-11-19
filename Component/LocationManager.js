@@ -18,15 +18,15 @@ export default function LocationManager() {
         updateDoc(auth.currentUser.uid, 'users', { Location: location });
     }
 
-    useEffect(() => {
-        async function getUserData() {
-            const userData = await getOneDoc(auth.currentUser.uid, 'users');
-            if (userData) {
-                setLocation(userData.location);
-            }
-        }
-        getUserData();
-        }, []);
+    // useEffect(() => {
+    //     async function getUserData() {
+    //         const userData = await getOneDoc(auth.currentUser.uid, 'users');
+    //         if (userData) {
+    //             setLocation(userData.location);
+    //         }
+    //     }
+    //     getUserData();
+    //     }, []);
 
     useEffect(() => {
         if (route.params) {
@@ -70,6 +70,7 @@ export default function LocationManager() {
             <Button disable={!location}
                 title='save location'
                 onPress={saveLocationHandler}></Button>
+
         </View>
     )
 }

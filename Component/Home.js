@@ -13,7 +13,6 @@ import { query } from 'firebase/firestore';
 import { ref, uploadBytesResumable } from 'firebase/storage';
 
 
-
 export default function App({ navigation }) {
   const appName = 'Mobile Dev';
   const [appVisibility, setAppVisibility] = useState(false);
