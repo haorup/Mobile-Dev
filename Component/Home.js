@@ -7,10 +7,11 @@ import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
 import { writeToDB, deleteDB, deletaAllDB } from '../Firebase/firestoreHelper';
-import { doc, onSnapshot, collection, where } from 'firebase/firestore';
-import { database } from '../Firebase/firebaseSetup';
-import { auth } from '../Firebase/firebaseSetup';
+import { onSnapshot, collection, where } from 'firebase/firestore';
+import { auth, database, storage } from '../Firebase/firebaseSetup';
 import { query } from 'firebase/firestore';
+import { ref, uploadBytesResumable } from 'firebase/storage';
+
 
 
 export default function App({ navigation }) {
@@ -20,12 +21,35 @@ export default function App({ navigation }) {
   // const [text, setText] = useState('');
   const [arrOfGoal, setArrOfGoal] = useState([]);
 
+  async function fetchAndUploadImage(uri) {
+    console.log('this is the uri', uri);
+    try {
+      const response = await fetch(uri);
+      if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.statusText);
+      }
+      const blob = await response.blob();
+      const imageName = uri.substring(uri.lastIndexOf('/') + 1);
+      const imageRef = ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      return uploadResult.ref.fullPath;
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   // function called when the user confirms the input
-  function handleInputData(data) {
+  async function handleInputData(data) {
     // writing data into the database
     let newData = { text: data.text };
+    let uri = '';
+    if (data.imageUri) {
+      uri = await fetchAndUploadImage(data.imageUri);
+    }
     newData = { ...newData, owner: auth.currentUser.uid };
+    if (uri) {
+      newData = { ...newData, imageUri: uri };
+    }
     writeToDB('goals', newData);
     setAppVisibility(false);
   }
@@ -66,7 +90,7 @@ export default function App({ navigation }) {
     const unsubscribe = onSnapshot(
       // update the listner to the goals collection
       query(collection(database, 'goals'),
-    where('owner', '==', auth.currentUser.uid)),
+        where('owner', '==', auth.currentUser.uid)),
       (queryShot) => {
         let newArr = [];
         let newEntry = {};

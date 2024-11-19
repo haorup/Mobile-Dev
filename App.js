@@ -13,6 +13,7 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import ProfileScreen from './Component/ProfileScreen';
 import PressButton from './Component/PressButton';
 import { signOut } from 'firebase/auth';
+import Maps from './Component/Maps';
 
 const Stack = createNativeStackNavigator();
 const AuthStack = (
@@ -60,6 +61,7 @@ const AppStack = (
           }
         }
       }} />
+      <Stack.Screen name='Maps' component={Maps} />
   </>
 )
 
