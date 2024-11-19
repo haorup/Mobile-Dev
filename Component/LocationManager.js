@@ -3,6 +3,8 @@ import React, { useEffect } from 'react'
 import * as Location from 'expo-location'
 import { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
+import { updateDoc, getOneDoc } from '../Firebase/firestoreHelper'
+import {auth} from '../Firebase/firebaseSetup'
 
 export default function LocationManager() {
     const [response, requestPermission] = Location.useForegroundPermissions()
@@ -11,14 +13,24 @@ export default function LocationManager() {
     const navigation = useNavigation();
     const route = useRoute();
 
+    // save the location to firebase
     function saveLocationHandler() {
-        addWarningField()
-
+        updateDoc(auth.currentUser.uid, 'users', { Location: location });
     }
 
     useEffect(() => {
-        if (route.selectedLocation) {
-            setLocation(route.selectedLocation);
+        async function getUserData() {
+            const userData = await getOneDoc(auth.currentUser.uid, 'users');
+            if (userData) {
+                setLocation(userData.location);
+            }
+        }
+        getUserData();
+        }, []);
+
+    useEffect(() => {
+        if (route.params) {
+            setLocation(route.params.selectedLocation);
         }
     }, [route]);
 
