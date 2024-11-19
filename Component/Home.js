@@ -7,10 +7,12 @@ import GoalItem from './GoalItem';
 import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
 import { writeToDB, deleteDB, deletaAllDB } from '../Firebase/firestoreHelper';
-import { doc, onSnapshot, collection, where } from 'firebase/firestore';
+import { onSnapshot, collection, where } from 'firebase/firestore';
 import { database } from '../Firebase/firebaseSetup';
-import { auth } from '../Firebase/firebaseSetup';
+import { auth, database, storage } from '../Firebase/firebaseSetup';
 import { query } from 'firebase/firestore';
+import { ref, uploadBytesResumable } from 'firebase/storage';
+
 
 
 export default function App({ navigation }) {
@@ -23,10 +25,14 @@ export default function App({ navigation }) {
   async function fetchAndUploadImage(uri) {
     try {
       const response = await fetch(uri);
+      if (!response.ok) {
+        throw new Error('Network response was not ok: ' + response.statusText);
+      }
       const blob = await response.blob();
       const imageName = uri.substring(uri.lastIndexOf('/') + 1);
-      const imageRef = await ref(storage, `images/${imageName}`)
-      const uploadResult = await uploadBytesResumable(imageRef, blob)
+      const imageRef = ref(storage, `images/${imageName}`);
+      const uploadResult = await uploadBytesResumable(imageRef, blob);
+      return uploadResult.ref.fullPath;
     } catch (error) {
       console.error(error);
     }
@@ -37,14 +43,13 @@ export default function App({ navigation }) {
     // writing data into the database
     let newData = { text: data.text };
     let uri = '';
-    if (!data.imageUri) {
-      uri = data.imageUri;
-      savedURI = await fetchAndUploadImage(uri);
+    if (data.imageUri) {
+      uri = await fetchAndUploadImage(uri);
     }
     newData = { ...newData, owner: auth.currentUser.uid };
-    // if (savedURI) {
-    //   newData = { ...newData, imageUri: savedURI };
-    // }
+    if (uri) {
+      newData = { ...newData, imageUri: uri };
+    }
     writeToDB('goals', newData);
     setAppVisibility(false);
   }
