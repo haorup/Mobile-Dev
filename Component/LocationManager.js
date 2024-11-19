@@ -1,14 +1,26 @@
 import { StyleSheet, Text, View, Button, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import * as Location from 'expo-location'
 import { useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
 
 export default function LocationManager() {
     const [response, requestPermission] = Location.useForegroundPermissions()
     const [location, setLocation] = useState({});
     const mapsApiKey = process.env.EXPO_PUBLIC_mapApiKey;
     const navigation = useNavigation();
+    const route = useRoute();
+
+    function saveLocationHandler() {
+        addWarningField()
+
+    }
+
+    useEffect(() => {
+        if (route.selectedLocation) {
+            setLocation(route.selectedLocation);
+        }
+    }, [route]);
 
     async function verifyPermission() {
         if (response.granted) {
@@ -33,7 +45,6 @@ export default function LocationManager() {
             console.log(error);
         }
     }
-
     return (
         <View>
             <Button title='get location' onPress={locateUserHandler}>
@@ -42,13 +53,11 @@ export default function LocationManager() {
             </Button>
             {location && <Image style={{ width: '100%', height: 200 }}
                 source={{
-                    uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},
-                    ${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel
-                    :L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`
+                    uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`
                 }}></Image>}
-
-
-
+            <Button disable={!location}
+                title='save location'
+                onPress={saveLocationHandler}></Button>
         </View>
     )
 }

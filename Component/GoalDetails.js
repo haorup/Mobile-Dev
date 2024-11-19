@@ -62,8 +62,10 @@ export default function GoalDetails({ navigation, route }) {
           <View>
             <Text style={textStyle}>
               Goal Details: {route.params.goalData.text} {'\n'}
-              Goal ID: {route.params.goalData.id}
             </Text>
+            {route.params.goalData.id && <Text style={textStyle}>
+              Goal ID: {route.params.goalData.id} {'\n'}
+            </Text>}
             <Button title="More Details" color={isRedColor ? 'red' : 'blue'}
               onPress={moreDetailHandler} />
             <GoalUsers id={route.params.goalData.id} />
