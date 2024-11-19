@@ -1,9 +1,9 @@
-import { StyleSheet, Text, View, Button, Image } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import { launchCameraAsync, MediaTypeOptions, useCameraPermissions } from 'expo-image-picker'
+import { StyleSheet, View, Button, Image } from 'react-native'
+import React, { useState } from 'react'
+import * as ImagePicker from 'expo-image-picker';
 
 export default function ImageManager({ passImageUri }) {
-    const [response, requestPermission] = useCameraPermissions();
+    const [response, requestPermission] = ImagePicker.useCameraPermissions();
     const [image, setImage] = useState(null);
     async function verifyPermission() {
         if (response.granted) {
@@ -22,9 +22,8 @@ export default function ImageManager({ passImageUri }) {
                     [{ text: "OK" }]);
                 return;
             }
-        const result = await launchCameraAsync(
+        const result = await ImagePicker.launchCameraAsync(
             {
-                mediaTypes: MediaTypeOptions.All,
                 allowsEditing: true,
                 aspect: [4, 3],
                 quality: 0.1,

@@ -8,7 +8,6 @@ import LineSeparator from './LineSeparator';
 import PressButton from './PressButton';
 import { writeToDB, deleteDB, deletaAllDB } from '../Firebase/firestoreHelper';
 import { onSnapshot, collection, where } from 'firebase/firestore';
-import { database } from '../Firebase/firebaseSetup';
 import { auth, database, storage } from '../Firebase/firebaseSetup';
 import { query } from 'firebase/firestore';
 import { ref, uploadBytesResumable } from 'firebase/storage';
@@ -23,6 +22,7 @@ export default function App({ navigation }) {
   const [arrOfGoal, setArrOfGoal] = useState([]);
 
   async function fetchAndUploadImage(uri) {
+    console.log('this is the uri', uri);
     try {
       const response = await fetch(uri);
       if (!response.ok) {
@@ -44,7 +44,7 @@ export default function App({ navigation }) {
     let newData = { text: data.text };
     let uri = '';
     if (data.imageUri) {
-      uri = await fetchAndUploadImage(uri);
+      uri = await fetchAndUploadImage(data.imageUri);
     }
     newData = { ...newData, owner: auth.currentUser.uid };
     if (uri) {

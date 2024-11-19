@@ -38,7 +38,7 @@ export default function LocationManager() {
         <View>
             <Button title='get location' onPress={locateUserHandler}>
             </Button>
-            <Button title='change' onPress={() => navigation.navigate('Maps')}>
+            <Button title='change to iteractive map' onPress={() => navigation.navigate('Maps')}>
             </Button>
             {location && <Image style={{ width: '100%', height: 200 }}
                 source={{

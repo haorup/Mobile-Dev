@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import AntDesign from '@expo/vector-icons/AntDesign';
@@ -6,6 +6,7 @@ import PressButton from './PressButton';
 import { addWarningField } from '../Firebase/firestoreHelper';
 import GoalUsers from './GoalUsers';
 import { getDownloadURL, ref } from 'firebase/storage';
+import { storage } from '../Firebase/firebaseSetup';
 
 export default function GoalDetails({ navigation, route }) {
 
@@ -38,16 +39,19 @@ export default function GoalDetails({ navigation, route }) {
     })
   });
 
-  useEffect(async () => {
+  useEffect( () => {
     async function downloadImageUri() {
+      try{
       if (route.params.goalData.imageUri) {
-        const imageUri = route.params.goalData.imageuri;
-        const reference = ref(storage, goal.imageUri);
+        const reference = ref(storage, route.params.goalData.imageUri);
         const url = await getDownloadURL(reference);
         setUrl(url);
       }
+    } catch (error) {
+      console.error('Error downloading image: ', error);
     }
-    await downloadImageUri();
+  }
+   downloadImageUri();
   }
   , []);
 
