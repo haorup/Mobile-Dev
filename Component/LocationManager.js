@@ -1,21 +1,21 @@
-import { StyleSheet, Text, View, Button, Image } from 'react-native'
+import { StyleSheet, View, Button, Image } from 'react-native'
 import React, { useEffect } from 'react'
 import * as Location from 'expo-location'
 import { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { updateDoc, getOneDoc } from '../Firebase/firestoreHelper'
+import { updateDoc } from '../Firebase/firestoreHelper'
 import {auth} from '../Firebase/firebaseSetup'
 
 export default function LocationManager() {
     const [response, requestPermission] = Location.useForegroundPermissions()
-    const [location, setLocation] = useState({});
+    const [location, setLocation] = useState(null);
     const mapsApiKey = process.env.EXPO_PUBLIC_mapApiKey;
     const navigation = useNavigation();
     const route = useRoute();
 
     // save the location to firebase
     function saveLocationHandler() {
-        updateDoc(auth.currentUser.uid, 'users', { Location: location });
+        updateDoc(auth.currentUser.uid, 'users', { location });
     }
 
     // useEffect(() => {
@@ -67,10 +67,9 @@ export default function LocationManager() {
                 source={{
                     uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`
                 }}></Image>}
-            <Button disable={!location}
+            <Button disabled={!location}
                 title='save location'
                 onPress={saveLocationHandler}></Button>
-
         </View>
     )
 }
