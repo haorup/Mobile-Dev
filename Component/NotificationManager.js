@@ -31,7 +31,7 @@ export default function NotificationManager() {
                     body: 'Time to get to work!',
                 },
                 trigger: {
-                    seconds: 5,
+                    seconds: 3,
                 },
             });
             console.log('Notification scheduled: ', id);

@@ -17,10 +17,8 @@ import Maps from './Component/Maps';
 import * as  Notifications from 'expo-notifications';
 
 Notifications.setNotificationHandler({
-  async handleNotification() {
-    return {shouldPlaySound: true,
-    shouldShowAlert: true,
-    shouldSetBadge: true}
+  handleNotification: async () =>{
+    return {shouldShowAlert: true};
     }
   });
 
