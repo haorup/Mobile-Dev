@@ -65,8 +65,11 @@ export default function LocationManager() {
             <Button title='change to iteractive map' onPress={() => navigation.navigate('Maps')}>
             </Button>
             {location && <Image style={{ width: '100%', height: 200 }}
-                source={{
-                    uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`
+                source={{ uri: 'https://maps.googleapis.com/maps/api/staticmap?' +
+                    `center=${location.latitude},${location.longitude}` +
+                    '&zoom=14&size=400x200&maptype=roadmap' +
+                    `&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}` +
+                    `&key=${mapsApiKey}`,
                 }}></Image>}
             <Button disabled={!location}
                 title='save location'

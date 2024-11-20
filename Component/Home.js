@@ -11,6 +11,7 @@ import { onSnapshot, collection, where } from 'firebase/firestore';
 import { auth, database, storage } from '../Firebase/firebaseSetup';
 import { query } from 'firebase/firestore';
 import { ref, uploadBytesResumable } from 'firebase/storage';
+import * as Notifications from 'expo-notifications';
 
 
 export default function App({ navigation }) {
@@ -80,6 +81,13 @@ export default function App({ navigation }) {
         }
       ]);
   }
+
+  useEffect(() => {
+    async function pushToken() {
+      const token = await Notifications.getExpoPushTokenAsync();
+    }
+    pushToken();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
