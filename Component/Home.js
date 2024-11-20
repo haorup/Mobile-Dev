@@ -11,7 +11,7 @@ import { onSnapshot, collection, where } from 'firebase/firestore';
 import { auth, database, storage } from '../Firebase/firebaseSetup';
 import { query } from 'firebase/firestore';
 import { ref, uploadBytesResumable } from 'firebase/storage';
-
+import * as Notifications from 'expo-notifications';
 
 
 export default function App({ navigation }) {
@@ -22,7 +22,6 @@ export default function App({ navigation }) {
   const [arrOfGoal, setArrOfGoal] = useState([]);
 
   async function fetchAndUploadImage(uri) {
-    console.log('this is the uri', uri);
     try {
       const response = await fetch(uri);
       if (!response.ok) {
@@ -56,19 +55,16 @@ export default function App({ navigation }) {
 
   // function called when the user cancels the input
   function handleCancelInput() {
-    console.log("input cancelled");
     setAppVisibility(false);
   }
 
   // function to delte a goal
   function handleDeleteGoal(goalId) {
-    console.log(goalId);
     deleteDB(goalId, 'goals');
   }
 
   // function to delete all goals
   function handleDeleteAll() {
-    console.log("Delete all goals");
     Alert.alert(
       "Delete all goals",
       "Do you want to delete all goals?",
@@ -85,6 +81,13 @@ export default function App({ navigation }) {
         }
       ]);
   }
+
+  useEffect(() => {
+    async function pushToken() {
+      const token = await Notifications.getExpoPushTokenAsync();
+    }
+    pushToken();
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(

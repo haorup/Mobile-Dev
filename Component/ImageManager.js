@@ -29,7 +29,6 @@ export default function ImageManager({ passImageUri }) {
                 quality: 0.1,
             }
         );
-        console.log(result);
         if (!result.canceled) {
         setImage(result.assets[0].uri);
         passImageUri(result.assets[0].uri);

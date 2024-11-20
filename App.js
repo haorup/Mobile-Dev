@@ -14,6 +14,13 @@ import ProfileScreen from './Component/ProfileScreen';
 import PressButton from './Component/PressButton';
 import { signOut } from 'firebase/auth';
 import Maps from './Component/Maps';
+import * as  Notifications from 'expo-notifications';
+
+Notifications.setNotificationHandler({
+  handleNotification: async () =>{
+    return {shouldShowAlert: true};
+    }
+  });
 
 const Stack = createNativeStackNavigator();
 const AuthStack = (
@@ -70,7 +77,6 @@ export default function App() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log('user', user);
       if (user) {
         setIsLogged(true);
       } else {

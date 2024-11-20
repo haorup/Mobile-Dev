@@ -1,7 +1,7 @@
 import {
     addDoc, collection,
     deleteDoc, doc, getDocs,
-    setDoc
+    setDoc, getDoc
 } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 
@@ -56,5 +56,29 @@ export async function getAllDocs(collectionName) {
         return data;
     } catch (e) {
         console.error("Error getting documents: ", e);
+    }
+}
+
+export async function getOneDoc(id, collectionName) {
+    try {
+        const docRef = doc(database, collectionName, id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return docSnap.data();
+        } else {
+            console.error("No such document!");
+            return null;
+        }
+    } catch (e) {
+        console.error("Error getting document: ", e);
+    }
+}
+
+export async function updateDoc(id, collectionName, data) {
+    try {
+        const docRef = doc(database, collectionName, id);
+        await setDoc(docRef, data, { merge: true });
+    } catch (e) {
+        console.error("Error updating document: ", e);
     }
 }

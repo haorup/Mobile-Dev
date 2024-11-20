@@ -1,14 +1,39 @@
-import { StyleSheet, Text, View, Button, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, View, Button, Image } from 'react-native'
+import React, { useEffect } from 'react'
 import * as Location from 'expo-location'
 import { useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation, useRoute } from '@react-navigation/native'
+import { updateDoc, getOneDoc } from '../Firebase/firestoreHelper'
+import {auth} from '../Firebase/firebaseSetup'
 
 export default function LocationManager() {
     const [response, requestPermission] = Location.useForegroundPermissions()
-    const [location, setLocation] = useState({});
+    const [location, setLocation] = useState(null);
     const mapsApiKey = process.env.EXPO_PUBLIC_mapApiKey;
     const navigation = useNavigation();
+    const route = useRoute();
+
+    // save the location to firebase
+    function saveLocationHandler() {
+        updateDoc(auth.currentUser.uid, 'users', { location });
+    }
+
+    useEffect(() => {
+        async function getUserData() {
+            const userData = await getOneDoc(auth.currentUser.uid, 'users');
+            console.log(userData.location);
+            if (userData && userData.location) {
+                setLocation(userData.location);
+            }
+        }
+        getUserData();
+        }, []);
+
+    useEffect(() => {
+        if (route.params) {
+            setLocation(route.params.selectedLocation);
+        }
+    }, [route]);
 
     async function verifyPermission() {
         if (response.granted) {
@@ -33,7 +58,6 @@ export default function LocationManager() {
             console.log(error);
         }
     }
-
     return (
         <View>
             <Button title='get location' onPress={locateUserHandler}>
@@ -41,14 +65,15 @@ export default function LocationManager() {
             <Button title='change to iteractive map' onPress={() => navigation.navigate('Maps')}>
             </Button>
             {location && <Image style={{ width: '100%', height: 200 }}
-                source={{
-                    uri: `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},
-                    ${location.longitude}&zoom=14&size=400x200&maptype=roadmap&markers=color:red%7Clabel
-                    :L%7C${location.latitude},${location.longitude}&key=${mapsApiKey}`
+                source={{ uri: 'https://maps.googleapis.com/maps/api/staticmap?' +
+                    `center=${location.latitude},${location.longitude}` +
+                    '&zoom=14&size=400x200&maptype=roadmap' +
+                    `&markers=color:red%7Clabel:L%7C${location.latitude},${location.longitude}` +
+                    `&key=${mapsApiKey}`,
                 }}></Image>}
-
-
-
+            <Button disabled={!location}
+                title='save location'
+                onPress={saveLocationHandler}></Button>
         </View>
     )
 }
