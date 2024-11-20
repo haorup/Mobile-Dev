@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import * as Location from 'expo-location'
 import { useState } from 'react'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { updateDoc } from '../Firebase/firestoreHelper'
+import { updateDoc, getOneDoc } from '../Firebase/firestoreHelper'
 import {auth} from '../Firebase/firebaseSetup'
 
 export default function LocationManager() {
@@ -18,15 +18,16 @@ export default function LocationManager() {
         updateDoc(auth.currentUser.uid, 'users', { location });
     }
 
-    // useEffect(() => {
-    //     async function getUserData() {
-    //         const userData = await getOneDoc(auth.currentUser.uid, 'users');
-    //         if (userData) {
-    //             setLocation(userData.location);
-    //         }
-    //     }
-    //     getUserData();
-    //     }, []);
+    useEffect(() => {
+        async function getUserData() {
+            const userData = await getOneDoc(auth.currentUser.uid, 'users');
+            console.log(userData.location);
+            if (userData && userData.location) {
+                setLocation(userData.location);
+            }
+        }
+        getUserData();
+        }, []);
 
     useEffect(() => {
         if (route.params) {

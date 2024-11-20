@@ -1,7 +1,7 @@
 import {
     addDoc, collection,
     deleteDoc, doc, getDocs,
-    setDoc
+    setDoc, getDoc
 } from "firebase/firestore";
 import { database } from "./firebaseSetup";
 
@@ -62,7 +62,7 @@ export async function getAllDocs(collectionName) {
 export async function getOneDoc(id, collectionName) {
     try {
         const docRef = doc(database, collectionName, id);
-        const docSnap = await getDocs(docRef);
+        const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
             return docSnap.data();
         } else {
